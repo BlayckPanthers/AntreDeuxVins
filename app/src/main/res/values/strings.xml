@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">AntreDeuxVins</string>
+    <string name="app_name">UMTZ</string>
+    <string name="infrastructure_textview_name">Server Name</string>
+    <string name="infrastructure_textview_ip">Server IP</string>
+    <string name="server_textview_name">Server Name</string>
+    <string name="server_textview_ip">Server ip</string>
+    <string name="server_button_start">Start</string>
+    <string name="server_button_stop">Stop</string>
+    <string name="server_button_restart">Restart</string>
+    <string name="login_edittext_mail">Mail</string>
+    <string name="login_edittext_password">Password</string>
+    <string name="login_button_connexion">Connexion</string>
+    <string name="txt_Show">Progressing Please wait...</string>
+    <string name="server_name">Server Name</string>
+    <string name="server_ip">Server IP</string>
+    <string name="server_name_detail">Server Name</string>
+    <string name="server_ip_detail">Server ip</string>
+    <string name="loggin_textview_link">Pas de compte ? Inscrivez-vous</string>
+    <string name="dialog_message">Voulez-vous vous deconnecter ?</string>
+    <string name="dialog_title">Deconnexion</string>
+    <string name="ok">Oui</string>
+    <string name="cancel">Non</string>
+    <string name="server_textview_status">Server Status</string>
+
 </resources>
