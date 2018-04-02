@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Tools.EmailValidator;
+import com.ingesup.fabienlebon.antredeuxvins.Entities.Tools.EncryptPassword;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.User;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 
@@ -18,6 +19,7 @@ import java.util.Date;
 public class MainActivity extends AppCompatActivity {
 
     private EmailValidator emailValidator;
+    private EncryptPassword encryptPassword;
     private TextInputLayout mailWrapper, pswWrapper;
 
     @Override
@@ -26,10 +28,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        mailWrapper = (TextInputLayout) findViewById(R.id.login_TIL_Mailwrapper);
-        pswWrapper  = (TextInputLayout) findViewById(R.id.login_TIL_pswWrapper);
-        emailValidator = new EmailValidator();
+        mailWrapper     = (TextInputLayout) findViewById(R.id.login_TIL_Mailwrapper);
+        pswWrapper      = (TextInputLayout) findViewById(R.id.login_TIL_pswWrapper);
 
+        emailValidator  = new EmailValidator();
+        encryptPassword = new EncryptPassword();
 
     }
 
@@ -39,22 +42,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loginOnClick(View view) {
-        String email = mailWrapper.getEditText().getText().toString();
+        String email    = mailWrapper.getEditText().getText().toString();
         String password = pswWrapper.getEditText().getText().toString();
 
         if(!email.equals("") && !password.equals(""))
         {
             if(emailValidator.validate(email)){
                 mailWrapper.setError(null);
-                User user = new User();
-                user.setMail(email);
-                user.setPassword(password);
+                User user = new User(email,password);
               //  new AsyncTaskConnexion(LoginActivty.this, user,mailWrapper)
               //          .execute("http://174.138.7.116:8080/CWS/api/verifUser");
 
               //  Intent intentToCellar = new Intent(getApplicationContext(), CellarActivity.class);
               //  startActivity(intentToCellar);
 
+                Toast.makeText(getApplicationContext(),"Connexion ...",Toast.LENGTH_SHORT).show();
             }
             else{
                 mailWrapper.setError("Adresse mail non valide");

@@ -37,7 +37,7 @@
 
         <!--  mail Label -->
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/login_TIL_Mailwrapper"
+            android:id="@+id/register_TIL_Mailwrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp">
@@ -52,7 +52,7 @@
 
         <!-- Name Label -->
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/login_TIL_NameWrapper"
+            android:id="@+id/register_TIL_NameWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp">
@@ -67,6 +67,7 @@
 
         <!--  Password Label -->
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/register_TIL_PassWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
@@ -83,6 +84,7 @@
 
         <!--  Confirm password Label -->
         <android.support.design.widget.TextInputLayout
+            android:id="@+id/register_TIL_PassRepWrapper"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"

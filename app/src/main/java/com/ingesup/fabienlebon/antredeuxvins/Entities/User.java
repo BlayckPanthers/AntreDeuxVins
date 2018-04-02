@@ -9,7 +9,19 @@ public class User {
     private String Name;
     private String Password;
 
+    public User(String mail, String name, String password) {
+        Mail = mail;
+        Name = name;
+        Password = password;
+    }
+
+    public User(String mail, String password){
+        this.Mail       = mail;
+        this.Password   = password;
+    }
+
     public String getMail() {
+
         return Mail;
     }
 
