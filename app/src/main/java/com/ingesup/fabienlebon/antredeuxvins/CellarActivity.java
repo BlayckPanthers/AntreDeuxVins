@@ -15,6 +15,7 @@ import android.widget.SearchView;
 
 import com.ingesup.fabienlebon.antredeuxvins.Adapters.CellarAdapter;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
+import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 
@@ -79,7 +80,7 @@ public class CellarActivity extends AppCompatActivity {
         Food[] foodd = new Food[]{Food.Fromage};
         Food[] fooda = new Food[]{Food.Viande, Food.Crustace};
         Food[] foodb = new Food[]{Food.Viande};
-        winesList.add(new Wine("Saint-Emillion","type",new Date(1995), 1, ColorEnum.Rouge, foodc));
+        winesList.add(new Wine("Saint-Emillion","type",new Date(1995), 1, ColorEnum.Rouge, foodc, Country.France));
         winesList.add(new Wine("Cabernet","type",new Date(2000), 1, ColorEnum.Rose,fooda));
         winesList.add(new Wine("Mouton-cadet","type",new Date(1890), 1, ColorEnum.Blanc,foodb));
         winesList.add(new Wine("Saint-Estephe","type",new Date(2005), 1, ColorEnum.Rouge,foods));

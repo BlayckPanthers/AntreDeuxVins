@@ -32,6 +32,16 @@ public class Wine {
         this.foods = food;
     }
 
+    public Wine(String name, String type, Date millesime, int volume, ColorEnum color, Food[] food, Country cntry) {
+        Name = name;
+        Type = type;
+        Millesime = millesime;
+        Volume = volume;
+        Color = color;
+        this.foods = food;
+        this.country = cntry;
+    }
+
     public String getName() {
         return Name;
     }
@@ -96,10 +106,10 @@ public class Wine {
         this.foods = foods;
     }
 
+    @Override
     public String toString() {
-        return this.Name + " " + this.getFoodsList() + " " + getColor().name();
+        return Name + " " +  Type + " " + country + " "+ region + " " + getFoodsList() + " " + getColor().name();
     }
-
     public String getFoodsList(){
         String foodString = "";
         for (Food foodElement : this.foods){
