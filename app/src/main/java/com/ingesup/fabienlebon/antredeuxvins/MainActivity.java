@@ -7,14 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ingesup.fabienlebon.antredeuxvins.Entities.Tools.EmailValidator;
-import com.ingesup.fabienlebon.antredeuxvins.Entities.Tools.EncryptPassword;
+import com.ingesup.fabienlebon.antredeuxvins.Tools.EmailValidator;
+import com.ingesup.fabienlebon.antredeuxvins.Tools.EncryptPassword;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.User;
-import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
-
-import org.w3c.dom.Text;
-
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -57,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
               //  startActivity(intentToCellar);
 
                 Toast.makeText(getApplicationContext(),"Connexion ...",Toast.LENGTH_SHORT).show();
+
+                Intent i = new Intent(this.getApplicationContext(), CellarActivity.class);
+                startActivity(i);
             }
             else{
                 mailWrapper.setError("Adresse mail non valide");

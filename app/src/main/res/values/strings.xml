@@ -43,5 +43,10 @@
     <string name="login_valid_form">Login</string>
     <string name="title_app">Antre Deux Vins</string>
     <string name="login_error_messageMail">Adresse mail non valide</string>
+    <string name="title_activity_cellar">CellarActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="res_list_view_single_name">Wine Name</string>
 
 </resources>

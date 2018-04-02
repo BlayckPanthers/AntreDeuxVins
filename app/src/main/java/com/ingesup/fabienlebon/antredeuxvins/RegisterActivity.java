@@ -8,13 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.ingesup.fabienlebon.antredeuxvins.Entities.Tools.EmailValidator;
-import com.ingesup.fabienlebon.antredeuxvins.Entities.Tools.EncryptPassword;
+import com.ingesup.fabienlebon.antredeuxvins.Tools.EmailValidator;
+import com.ingesup.fabienlebon.antredeuxvins.Tools.EncryptPassword;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.User;
-
-import org.w3c.dom.Text;
-
-import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends AppCompatActivity {
 

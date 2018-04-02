@@ -1,7 +1,8 @@
 package com.ingesup.fabienlebon.antredeuxvins.Entities;
 
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
-import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Pays;
+import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
+import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Region;
 
 import java.util.Date;
@@ -16,16 +17,19 @@ public class Wine {
     private String Type;
     private Date Millesime;
     private ColorEnum Color;
-    private Pays pays;
+    private Country country;
     private Region region;
     private int Volume;
+    private Food[] foods;
 
 
-    public Wine(String name, String type, Date millesime, int volume) {
+    public Wine(String name, String type, Date millesime, int volume, ColorEnum color, Food[] food) {
         Name = name;
         Type = type;
         Millesime = millesime;
         Volume = volume;
+        Color = color;
+        this.foods = food;
     }
 
     public String getName() {
@@ -60,12 +64,12 @@ public class Wine {
         Color = color;
     }
 
-    public Pays getPays() {
-        return pays;
+    public Country getPays() {
+        return country;
     }
 
-    public void setPays(Pays pays) {
-        this.pays = pays;
+    public void setPays(Country country) {
+        this.country = country;
     }
 
     public Region getRegion() {
@@ -82,5 +86,21 @@ public class Wine {
 
     public void setVolume(int volume) {
         Volume = volume;
+    }
+
+    public Food[] getFoods() {
+        return foods;
+    }
+
+    public void setFoods(Food[] foods) {
+        this.foods = foods;
+    }
+
+    public String getFoodsList(){
+        String foodString = "";
+        for (Food foodElement : this.foods){
+            foodString += foodElement.name() + " " ;
+        }
+        return foodString;
     }
 }

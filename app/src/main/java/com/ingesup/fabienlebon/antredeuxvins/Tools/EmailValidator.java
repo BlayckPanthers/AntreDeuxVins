@@ -1,4 +1,4 @@
-package com.ingesup.fabienlebon.antredeuxvins.Entities.Tools;
+package com.ingesup.fabienlebon.antredeuxvins.Tools;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

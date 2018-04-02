@@ -1,4 +1,4 @@
-package com.ingesup.fabienlebon.antredeuxvins.Entities.Tools;
+package com.ingesup.fabienlebon.antredeuxvins.Tools;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
