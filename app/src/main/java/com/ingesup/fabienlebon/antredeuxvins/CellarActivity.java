@@ -30,6 +30,7 @@ public class CellarActivity extends AppCompatActivity {
     private ListView wineListView;
     private EditText searchEditText;
     private CellarAdapter cellarAdapter;
+    private List<Wine> winesList ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,13 @@ public class CellarActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // TODO : CustomDialog ajout d'un vin à la cave + Pull refresh sur la listview
             }
         });
 
         wineListView = (ListView) findViewById(R.id.cellar_wineList);
         searchEditText = (EditText) findViewById(R.id.cellar_search);
+        winesList = new ArrayList<>();
 
         List<Wine> wines = genererWines();
         cellarAdapter = new CellarAdapter(CellarActivity.this, wines);
@@ -72,25 +73,27 @@ public class CellarActivity extends AppCompatActivity {
     }
 
     private List<Wine> genererWines() {
-        List<Wine> wines = new ArrayList<>();
+
         Food[] foods = new Food[]{Food.Fromage, Food.Viande, Food.Crustace};
+        Food[] foodc = new Food[]{Food.Crustace};
+        Food[] foodd = new Food[]{Food.Fromage};
         Food[] fooda = new Food[]{Food.Viande, Food.Crustace};
         Food[] foodb = new Food[]{Food.Viande};
-        wines.add(new Wine("Saint-Emillion","type",new Date(1995), 1, ColorEnum.Rouge, foods));
-        wines.add(new Wine("Cabernet","type",new Date(2000), 1, ColorEnum.Rose,fooda));
-        wines.add(new Wine("Mouton-cadet","type",new Date(1890), 1, ColorEnum.Blanc,foodb));
-        wines.add(new Wine("Saint-Estephe","type",new Date(2005), 1, ColorEnum.Rouge,foods));
-        wines.add(new Wine("Chateau-neuf-du-pape","type",new Date(2016), 1, ColorEnum.Rouge,foods));
-        wines.add(new Wine("Beaujolais","type",new Date(2010), 1, ColorEnum.Blanc,fooda));
-        wines.add(new Wine("Saint-Emillion","type",new Date(1995), 1, ColorEnum.Rouge, foods));
-        wines.add(new Wine("Cabernet","type",new Date(2000), 1, ColorEnum.Rose,fooda));
-        wines.add(new Wine("Mouton-cadet","type",new Date(1890), 1, ColorEnum.Blanc,foodb));
-        wines.add(new Wine("Saint-Estephe","type",new Date(2005), 1, ColorEnum.Rouge,foods));
-        wines.add(new Wine("Chateau-neuf-du-pape","type",new Date(2016), 1, ColorEnum.Rouge,foods));
-        wines.add(new Wine("Beaujolais","type",new Date(2010), 1, ColorEnum.Blanc,fooda));
+        winesList.add(new Wine("Saint-Emillion","type",new Date(1995), 1, ColorEnum.Rouge, foodc));
+        winesList.add(new Wine("Cabernet","type",new Date(2000), 1, ColorEnum.Rose,fooda));
+        winesList.add(new Wine("Mouton-cadet","type",new Date(1890), 1, ColorEnum.Blanc,foodb));
+        winesList.add(new Wine("Saint-Estephe","type",new Date(2005), 1, ColorEnum.Rouge,foods));
+        winesList.add(new Wine("Chateau-neuf-du-pape","type",new Date(2016), 1, ColorEnum.Rouge,foodd));
+        winesList.add(new Wine("Beaujolais","type",new Date(2010), 1, ColorEnum.Blanc,fooda));
+        winesList.add(new Wine("Saint-Emillion","type",new Date(1995), 1, ColorEnum.Rouge, foods));
+        winesList.add(new Wine("Cabernet","type",new Date(2000), 1, ColorEnum.Rose,fooda));
+        winesList.add(new Wine("Mouton-cadet","type",new Date(1890), 1, ColorEnum.Blanc,foodb));
+        winesList.add(new Wine("Saint-Estephe","type",new Date(2005), 1, ColorEnum.Rouge,foods));
+        winesList.add(new Wine("Chateau-neuf-du-pape","type",new Date(2016), 1, ColorEnum.Rouge,foods));
+        winesList.add(new Wine("Beaujolais","type",new Date(2010), 1, ColorEnum.Blanc,fooda));
 
 
-        return wines;
+        return winesList;
     }
 
 }

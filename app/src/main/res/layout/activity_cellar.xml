@@ -21,6 +21,8 @@
             android:textAlignment="center"
             android:textSize="26dp"
             android:textColor="@color/colorPrimary"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             />
 
         <EditText
