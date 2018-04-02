@@ -6,6 +6,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -27,6 +29,7 @@ public class CellarActivity extends AppCompatActivity {
 
     private ListView wineListView;
     private EditText searchEditText;
+    private CellarAdapter cellarAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +49,25 @@ public class CellarActivity extends AppCompatActivity {
         searchEditText = (EditText) findViewById(R.id.cellar_search);
 
         List<Wine> wines = genererWines();
-        CellarAdapter cellarAdapter = new CellarAdapter(CellarActivity.this, wines);
+        cellarAdapter = new CellarAdapter(CellarActivity.this, wines);
         wineListView.setAdapter(cellarAdapter);
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                (CellarActivity.this).cellarAdapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
     }
 

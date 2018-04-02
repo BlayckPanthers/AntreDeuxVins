@@ -96,6 +96,10 @@ public class Wine {
         this.foods = foods;
     }
 
+    public String toString() {
+        return this.Name + " " + this.getFoodsList() + " " + getColor().name();
+    }
+
     public String getFoodsList(){
         String foodString = "";
         for (Food foodElement : this.foods){
