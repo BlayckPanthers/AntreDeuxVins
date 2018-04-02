@@ -1,5 +1,6 @@
 package com.ingesup.fabienlebon.antredeuxvins;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,5 +16,10 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registerToLoginOnclick(View view) {
+        Intent i = new Intent(this.getApplicationContext(), MainActivity.class);
+        startActivity(i);
+    }
+
+    public void registerOnclick(View view) {
     }
 }

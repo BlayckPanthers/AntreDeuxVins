@@ -5,5 +5,5 @@ package com.ingesup.fabienlebon.antredeuxvins.Entities.Enum;
  */
 
 public enum Pays {
-
+    France, Angleterre, Itaie, Portugal, Espagne
 }

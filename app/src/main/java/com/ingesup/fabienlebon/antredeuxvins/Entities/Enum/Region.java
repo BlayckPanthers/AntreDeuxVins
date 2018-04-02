@@ -5,5 +5,5 @@ package com.ingesup.fabienlebon.antredeuxvins.Entities.Enum;
  */
 
 public enum Region {
-
+    Bordeaux, Bourgogne
 }

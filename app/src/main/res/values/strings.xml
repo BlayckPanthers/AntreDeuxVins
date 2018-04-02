@@ -42,5 +42,6 @@
     <string name="register_valid_form">Register</string>
     <string name="login_valid_form">Login</string>
     <string name="title_app">Antre Deux Vins</string>
+    <string name="login_error_messageMail">Adresse mail non valide</string>
 
 </resources>

@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/title_app"
-            android:fontFamily="@font/lobster"
             android:textAlignment="center"
             android:textSize="42dp"
             android:textColor="@color/colorPrimary"
@@ -63,7 +62,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:layout_marginBottom="8dp"
-            android:layout_marginTop="8dp">
+            android:layout_marginTop="8dp"
+            android:id="@+id/login_TIL_pswWrapper">
 
             <EditText
                 android:id="@+id/editTextPassword"
@@ -81,9 +81,8 @@
             android:gravity="center"
             android:text="@string/login_valid_form"
             android:background="@color/colorPrimary"
-            
-            android:textColor="#FFF"
-            tools:ignore="OnClick" />
+            android:onClick="loginOnClick"
+            android:textColor="@color/backgroungColor" />
 
         <TextView
             android:id="@+id/textViewLink"
@@ -91,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:text="Vous n'avez pas de comptes ? Inscrivez-vous !"
-            android:onClick="registerOnclick"
+            android:onClick="loginToRegisterOnclick"
             />
 
     </LinearLayout>
