@@ -32,10 +32,15 @@
             android:layout_margin="15dp"
             />
 
-        <ListView
-            android:id="@+id/cellar_wineList"
+        <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/swipe_refresh_layout"
             android:layout_width="match_parent"
-            android:layout_height="478dp" />
+            android:layout_height="wrap_content">
+            <ListView
+                android:id="@+id/cellar_wineList"
+                android:layout_width="match_parent"
+                android:layout_height="478dp" />
+        </android.support.v4.widget.SwipeRefreshLayout>
     </LinearLayout>
 
 

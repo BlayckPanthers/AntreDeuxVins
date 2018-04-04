@@ -5,7 +5,11 @@ import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Region;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by fabienlebon on 16/03/2018.
@@ -14,32 +18,29 @@ import java.util.Date;
 public class Wine {
 
     private String Name;
-    private String Type;
     private Date Millesime;
     private ColorEnum Color;
-    private Country country;
-    private Region region;
-    private int Volume;
+    private Country Country;
+    private Region Region;
+    private float Volume;
     private Food[] foods;
 
 
-    public Wine(String name, String type, Date millesime, int volume, ColorEnum color, Food[] food) {
+    public Wine(String name, Date millesime, float volume, ColorEnum color, Food[] food) {
         Name = name;
-        Type = type;
         Millesime = millesime;
         Volume = volume;
         Color = color;
         this.foods = food;
     }
 
-    public Wine(String name, String type, Date millesime, int volume, ColorEnum color, Food[] food, Country cntry) {
+    public Wine(String name, Date millesime, float volume, ColorEnum color, Food[] food, Country cntry) {
         Name = name;
-        Type = type;
         Millesime = millesime;
         Volume = volume;
         Color = color;
         this.foods = food;
-        this.country = cntry;
+        this.Country = cntry;
     }
 
     public String getName() {
@@ -50,20 +51,17 @@ public class Wine {
         Name = name;
     }
 
-    public String getType() {
-        return Type;
-    }
-
-    public void setType(String type) {
-        Type = type;
-    }
-
     public Date getMillesime() {
         return Millesime;
     }
 
     public void setMillesime(Date millesime) {
         Millesime = millesime;
+    }
+
+    public int getMillesimeYear(){
+        int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(Millesime));
+        return year;
     }
 
     public ColorEnum getColor() {
@@ -75,26 +73,26 @@ public class Wine {
     }
 
     public Country getPays() {
-        return country;
+        return Country;
     }
 
     public void setPays(Country country) {
-        this.country = country;
+        this.Country = country;
     }
 
     public Region getRegion() {
-        return region;
+        return Region;
     }
 
     public void setRegion(Region region) {
-        this.region = region;
+        this.Region = region;
     }
 
-    public int getVolume() {
+    public float getVolume() {
         return Volume;
     }
 
-    public void setVolume(int volume) {
+    public void setVolume(float volume) {
         Volume = volume;
     }
 
@@ -106,15 +104,18 @@ public class Wine {
         this.foods = foods;
     }
 
-    @Override
-    public String toString() {
-        return Name + " " +  Type + " " + country + " "+ region + " " + getFoodsList() + " " + getColor().name();
-    }
     public String getFoodsList(){
         String foodString = "";
         for (Food foodElement : this.foods){
-            foodString += foodElement.name() + " " ;
+            if(foodElement != null){
+                foodString += foodElement.name() + " " ;
+            }
         }
         return foodString;
+    }
+
+    @Override
+    public String toString() {
+        return Name + " " + getMillesimeYear() + " " + Color + " " + Country + " " + Region + " " + Volume + getFoodsList();
     }
 }

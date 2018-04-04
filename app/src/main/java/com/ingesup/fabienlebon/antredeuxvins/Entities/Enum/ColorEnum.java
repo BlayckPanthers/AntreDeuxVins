@@ -11,7 +11,7 @@ public enum ColorEnum {
 
     private String value;
 
-    private ColorEnum(){}
+    ColorEnum(){}
 
     private ColorEnum(String i){
         this.value = i;
