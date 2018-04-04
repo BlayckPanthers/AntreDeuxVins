@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
@@ -68,25 +69,50 @@ public class AddWineDialog extends DialogFragment {
                 .setPositiveButton("add", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        Log.i(TAG, "onClick show results: " + name.getEditText().getText().toString() + " " + volume.getEditText().getText().toString());
-                        Log.i(TAG, "onClick: show type " + type.getCheckedRadioButtonId());
-
-                        Food[] foodArray = new Food[]{viande.isChecked() ? Food.Viande: null, fromage.isChecked() ? Food.Fromage: null, crustace.isChecked() ? Food.Crustace: null};
-                        Log.i(TAG, "onClick: show foods" + foodArray.length);
-
                         ColorEnum e = null;
-                        switch(type.getCheckedRadioButtonId()){
-                            case 1 : e = ColorEnum.Rouge ; break;
-                            case 2 : e = ColorEnum.Blanc ; break;
-                            case 3 : e = ColorEnum.Rose  ; break;
-                        }
 
-                        Wine wine = new Wine(name.getEditText().getText().toString(),
-                                new Date(Integer.valueOf(millesime.getEditText().getText().toString())),
-                                Float.valueOf(volume.getEditText().getText().toString()),
-                                e,
-                                foodArray);
-                        mListener.onDialogPositiveClick(AddWineDialog.this, wine);
+                        if(!name.getEditText().getText().toString().equals("") && !millesime.getEditText().getText().toString().equals("")
+                                && !volume.getEditText().getText().toString().equals("")) {
+                            if(Integer.valueOf(millesime.getEditText().getText().toString()) > 1900
+                                    && Integer.valueOf(millesime.getEditText().getText().toString()) < 2018) {
+                                if(type.getCheckedRadioButtonId() > 0) {
+                                    switch(type.getCheckedRadioButtonId()) {
+                                        case 1:
+                                            e = ColorEnum.Rouge;
+                                            break;
+                                        case 2:
+                                            e = ColorEnum.Blanc;
+                                            break;
+                                        case 3:
+                                            e = ColorEnum.Rose;
+                                            break;
+                                    }
+                                    if(viande.isChecked() || fromage.isChecked() || crustace.isChecked()) {
+                                        Food[] foodArray = new Food[]{viande.isChecked() ? Food.Viande: null, fromage.isChecked() ? Food.Fromage: null, crustace.isChecked() ? Food.Crustace: null};
+                                        Wine wine = new Wine(name.getEditText().getText().toString(),
+                                                new Date(Integer.valueOf(millesime.getEditText().getText().toString())),
+                                                Float.valueOf(volume.getEditText().getText().toString()),
+                                                e,
+                                                foodArray);
+                                        mListener.onDialogPositiveClick(AddWineDialog.this, wine);
+                                    }
+                                    else{
+                                        Toast.makeText(getContext(),"Choisissez au moins un accompagnement",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(getContext(),"Choisissez un type de vin",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else{
+                                millesime.setError("Entrez une date comprise entre 1900 et 2018");
+                            }
+
+                        }
+                        else
+                        {
+                            Toast.makeText(getContext(),"Veuillez remplir les champs",Toast.LENGTH_SHORT).show();
+                        }
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -98,7 +124,6 @@ public class AddWineDialog extends DialogFragment {
     }
 
 
-    // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -109,7 +134,7 @@ public class AddWineDialog extends DialogFragment {
         } catch (ClassCastException e) {
             // The activity doesn't implement the interface, throw exception
             throw new ClassCastException(activity.toString()
-                    + " must implement NoticeDialogListener");
+                    + " must implement the listener");
         }
     }
 }
