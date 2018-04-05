@@ -19,13 +19,16 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
+import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 import com.ingesup.fabienlebon.antredeuxvins.R;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -105,12 +108,20 @@ public class AddWineDialog extends DialogFragment {
                                             break;
                                     }
                                     if(viande.isChecked() || fromage.isChecked() || crustace.isChecked()) {
-                                        Food[] foodArray = new Food[]{viande.isChecked() ? Food.Viande: null, fromage.isChecked() ? Food.Fromage: null, crustace.isChecked() ? Food.Crustace: null};
-                                        Wine wine = new Wine(name.getEditText().getText().toString(),
+                                        List<Food> foodList = new ArrayList<Food>();
+                                        if(viande.isChecked())
+                                            foodList.add(Food.Viande);
+                                        if(fromage.isChecked())
+                                            foodList.add(Food.Fromage);
+                                        if(crustace.isChecked())
+                                            foodList.add(Food.Crustace);
+
+
+                                        Wine wine = new Wine(13,name.getEditText().getText().toString(),
                                                 new Date(Integer.valueOf(millesime.getEditText().getText().toString())),
                                                 Float.valueOf(volume.getEditText().getText().toString()),
                                                 e,
-                                                foodArray);
+                                                foodList, Country.France);
                                         mListener.onDialogPositiveClick(AddWineDialog.this, wine);
                                     }
                                     else{

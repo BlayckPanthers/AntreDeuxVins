@@ -25,7 +25,8 @@
         <activity
             android:name=".CellarActivity"
             android:label="@string/title_activity_cellar"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".WineActivity"></activity>
     </application>
 
 </manifest>

@@ -1,15 +1,20 @@
 package com.ingesup.fabienlebon.antredeuxvins.Entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Region;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Created by fabienlebon on 16/03/2018.
@@ -17,16 +22,18 @@ import java.util.GregorianCalendar;
 
 public class Wine {
 
+    private int id;
     private String Name;
     private Date Millesime;
     private ColorEnum Color;
     private Country Country;
     private Region Region;
     private float Volume;
-    private Food[] foods;
+    private List<Food> foods;
 
 
-    public Wine(String name, Date millesime, float volume, ColorEnum color, Food[] food) {
+    public Wine(int id, String name, Date millesime, float volume, ColorEnum color, List<Food> food) {
+        id = id;
         Name = name;
         Millesime = millesime;
         Volume = volume;
@@ -34,13 +41,22 @@ public class Wine {
         this.foods = food;
     }
 
-    public Wine(String name, Date millesime, float volume, ColorEnum color, Food[] food, Country cntry) {
+    public Wine(int id, String name, Date millesime, float volume, ColorEnum color,List<Food> food, Country cntry) {
+        id = id;
         Name = name;
         Millesime = millesime;
         Volume = volume;
         Color = color;
         this.foods = food;
         this.Country = cntry;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -72,11 +88,11 @@ public class Wine {
         Color = color;
     }
 
-    public Country getPays() {
+    public Country getCountry() {
         return Country;
     }
 
-    public void setPays(Country country) {
+    public void setPays (Country country) {
         this.Country = country;
     }
 
@@ -96,11 +112,11 @@ public class Wine {
         Volume = volume;
     }
 
-    public Food[] getFoods() {
+    public List<Food> getFoods() {
         return foods;
     }
 
-    public void setFoods(Food[] foods) {
+    public void setFoods(List<Food> foods) {
         this.foods = foods;
     }
 
@@ -114,8 +130,23 @@ public class Wine {
         return foodString;
     }
 
+    protected Wine(Parcel in) {
+        id = in.readInt();
+        Name=in.readString();
+        Millesime=(java.util.Date) in.readSerializable();
+        Color= ColorEnum.valueOf(in.readString());
+        Volume=in.readFloat();
+        List<String> foodStrings = new ArrayList<String>();
+        in.readList(foodStrings, null);
+        for (String foodElement : foodStrings) {
+            foods.add(Food.valueOf(foodElement));
+        }
+    }
+
     @Override
     public String toString() {
         return Name +  " " + Color + " " + getFoodsList();
     }
+
+
 }

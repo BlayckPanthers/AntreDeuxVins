@@ -1,6 +1,8 @@
 package com.ingesup.fabienlebon.antredeuxvins;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -23,6 +25,7 @@ import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -83,12 +86,32 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
             }
         });
 
-
         wineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 // When clicked, show a toast
-                Toast.makeText(getApplicationContext(),
-                        "test" + position  + " id : " + id, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), WineActivity.class);
+                Wine n = (Wine) wineListView.getItemAtPosition(position);
+
+                Log.i(TAG, "onCreate: " +
+                        "id " + n.getId() +
+                        " name " + n.getName() +
+                        " millesime " + n.getMillesime().toString() +
+                        " color " +  n.getColor().name() +
+                        " country " + n.getCountry().name() +
+                        " volume " + String.valueOf(n.getVolume()) +
+                        " foods " + n.getFoodsList()
+
+                );
+
+                intent.putExtra("id", String.valueOf(n.getId()));
+                intent.putExtra("Name", n.getName());
+                intent.putExtra("Millesime", String.valueOf(n.getMillesimeYear()));
+                intent.putExtra("ColorEnum", n.getColor().name());
+                intent.putExtra("Country", n.getCountry().name());
+                intent.putExtra("Volume", String.valueOf(n.getVolume()));
+                intent.putExtra("foods",n.getFoodsList());
+
+                startActivity(intent);
             }
         });
     }
@@ -100,18 +123,18 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         Food[] foodd = new Food[]{Food.Fromage};
         Food[] fooda = new Food[]{Food.Viande, Food.Crustace};
         Food[] foodb = new Food[]{Food.Viande};
-        winesList.add(new Wine("Saint-Emillion",new Date(1995), 1, ColorEnum.Rouge, foodc, Country.France));
-        winesList.add(new Wine("Cabernet",new Date(2000), 1, ColorEnum.Rose,fooda));
-        winesList.add(new Wine("Mouton-cadet",new Date(1890), 1, ColorEnum.Blanc,foodb));
-        winesList.add(new Wine("Saint-Estephe",new Date(2005), 1, ColorEnum.Rouge,foods));
-        winesList.add(new Wine("Chateau-neuf-du-pape",new Date(2016), 1, ColorEnum.Rouge,foodd));
-        winesList.add(new Wine("Beaujolais",new Date(2010), 1, ColorEnum.Blanc,fooda));
-        winesList.add(new Wine("Saint-Emillion",new Date(1995), 1, ColorEnum.Rouge, foods));
-        winesList.add(new Wine("Cabernet",new Date(2000), 1, ColorEnum.Rose,fooda));
-        winesList.add(new Wine("Mouton-cadet",new Date(1890), 1, ColorEnum.Blanc,foodb));
-        winesList.add(new Wine("Saint-Estephe",new Date(2005), 1, ColorEnum.Rouge,foods));
-        winesList.add(new Wine("Chateau-neuf-du-pape",new Date(2016), 1, ColorEnum.Rouge,foods));
-        winesList.add(new Wine("Beaujolais",new Date(2010), 1, ColorEnum.Rouge,fooda));
+        winesList.add(new Wine(1,"Saint-Emillion",new Date(1995), 1, ColorEnum.Rouge, Arrays.asList(foodc), Country.France));
+        winesList.add(new Wine(2,"Cabernet",new Date(2000), 1, ColorEnum.Rose, Arrays.asList(fooda), Country.France));
+        winesList.add(new Wine(3,"Mouton-cadet",new Date(1890), 1, ColorEnum.Blanc,Arrays.asList(foodb), Country.France));
+        winesList.add(new Wine(4,"Saint-Estephe",new Date(2005), 1, ColorEnum.Rouge,Arrays.asList(foods), Country.France));
+        winesList.add(new Wine(5,"Chateau-neuf-du-pape",new Date(2016), 1, ColorEnum.Rouge,Arrays.asList(foodd), Country.France));
+        winesList.add(new Wine(6,"Beaujolais",new Date(2010), 1, ColorEnum.Blanc,Arrays.asList(fooda), Country.France));
+        winesList.add(new Wine(7,"Saint-Emillion",new Date(1995), 1, ColorEnum.Rouge, Arrays.asList(foods), Country.France));
+        winesList.add(new Wine(8,"Cabernet",new Date(2000), 1, ColorEnum.Rose,Arrays.asList(fooda), Country.France));
+        winesList.add(new Wine(9,"Mouton-cadet",new Date(1890), 1, ColorEnum.Blanc,Arrays.asList(foodb), Country.France));
+        winesList.add(new Wine(10,"Saint-Estephe",new Date(2005), 1, ColorEnum.Rouge,Arrays.asList(foodd), Country.France));
+        winesList.add(new Wine(11,"Chateau-neuf-du-pape",new Date(2016), 1, ColorEnum.Rouge,Arrays.asList(foodc), Country.France));
+        winesList.add(new Wine(12,"Beaujolais",new Date(2010), 1, ColorEnum.Rouge,Arrays.asList(fooda), Country.France));
 
 
         return winesList;
