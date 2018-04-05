@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public void loginToRegisterOnclick(View view) {
         Intent i = new Intent(this.getApplicationContext(), RegisterActivity.class);
         startActivity(i);
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
     public void loginOnClick(View view) {
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent i = new Intent(this.getApplicationContext(), CellarActivity.class);
                 startActivity(i);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
             else{
                 mailWrapper.setError("Adresse mail non valide");

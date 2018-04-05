@@ -167,4 +167,10 @@ public class WineActivity extends Activity {
         accept.setVisibility(View.GONE);
         cancel.setVisibility(View.GONE);
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }

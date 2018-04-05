@@ -112,6 +112,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
                 intent.putExtra("foods",n.getFoodsList());
 
                 startActivity(intent);
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
     }
