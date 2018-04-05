@@ -15,14 +15,11 @@
         android:orientation="vertical"
 
         >
-        <TextView
+        <ImageView
+            android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title_app"
-            android:textAlignment="center"
-            android:textSize="42dp"
-            android:textColor="@color/colorPrimary"
-            />
+            android:layout_height="77dp"
+            app:srcCompat="@drawable/antredeuxvins_logo" />
     </LinearLayout>
 
     <LinearLayout

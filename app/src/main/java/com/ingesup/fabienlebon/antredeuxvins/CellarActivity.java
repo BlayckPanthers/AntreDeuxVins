@@ -86,6 +86,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
             }
         });
 
+
         wineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
                 // When clicked, show a toast

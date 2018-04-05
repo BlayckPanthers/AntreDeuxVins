@@ -15,21 +15,12 @@
         android:orientation="vertical"
         android:layout_marginTop="20dp"
         >
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/title_app"
-            android:textAlignment="center"
-            android:textSize="42dp"
-            android:textColor="@color/colorPrimary"
-            />
-       <!--
+
         <ImageView
             android:id="@+id/imageView"
-            android:minHeight="250dp"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@mipmap/main_background_round" /> -->
+            android:layout_height="77dp"
+            app:srcCompat="@drawable/antredeuxvins_logo" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
