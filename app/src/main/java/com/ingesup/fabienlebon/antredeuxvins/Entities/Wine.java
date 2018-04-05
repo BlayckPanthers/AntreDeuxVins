@@ -107,15 +107,14 @@ public class Wine {
     public String getFoodsList(){
         String foodString = "";
         for (Food foodElement : this.foods){
-            if(foodElement != null){
-                foodString += foodElement.name() + " " ;
-            }
+            foodString += foodElement.name() + " " ;
+
         }
         return foodString;
     }
 
     @Override
     public String toString() {
-        return Name + " " + getMillesimeYear() + " " + Color + " " + Country + " " + Region + " " + Volume + getFoodsList();
+        return Name +  " " + Color + " " + getFoodsList();
     }
 }

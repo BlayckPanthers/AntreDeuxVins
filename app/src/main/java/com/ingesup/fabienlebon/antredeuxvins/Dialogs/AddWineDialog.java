@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -38,7 +39,12 @@ public class AddWineDialog extends DialogFragment {
     private TextInputLayout name,millesime,volume;
     private RadioGroup type;
     private CheckBox viande, fromage, crustace;
-    private Food[] foods;
+    private RadioButton rouge, blanc, rose;
+
+    private static final int ROUGE_ID = 1000;
+    private static final int BLANC_ID = 1001;
+    private static final int ROSE_ID  = 1002;
+
 
     public static interface addWineDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog, Wine n);
@@ -57,10 +63,20 @@ public class AddWineDialog extends DialogFragment {
         name        = (TextInputLayout) view.findViewById(R.id.fragment_name_wine);
         volume      = (TextInputLayout) view.findViewById(R.id.fragment_volume);
         millesime   = (TextInputLayout) view.findViewById(R.id.fragment_millesime);
+
         type        = (RadioGroup) view.findViewById(R.id.fragment_type_wine);
+
         viande      = (CheckBox) view.findViewById(R.id.fragment_viande);
         fromage     = (CheckBox) view.findViewById(R.id.fragment_fromage);
         crustace    = (CheckBox) view.findViewById(R.id.fragment_crustace);
+
+        rouge       = (RadioButton) view.findViewById(R.id.rouge1);
+        blanc       = (RadioButton) view.findViewById(R.id.blanc1);
+        rose        = (RadioButton) view.findViewById(R.id.rose1);
+
+        rouge.setId(ROUGE_ID);
+        blanc.setId(BLANC_ID);
+        rose.setId(ROSE_ID);
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -70,6 +86,7 @@ public class AddWineDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         ColorEnum e = null;
+                        Log.i(TAG, "type vin : " + type.getCheckedRadioButtonId());
 
                         if(!name.getEditText().getText().toString().equals("") && !millesime.getEditText().getText().toString().equals("")
                                 && !volume.getEditText().getText().toString().equals("")) {
@@ -77,13 +94,13 @@ public class AddWineDialog extends DialogFragment {
                                     && Integer.valueOf(millesime.getEditText().getText().toString()) < 2018) {
                                 if(type.getCheckedRadioButtonId() > 0) {
                                     switch(type.getCheckedRadioButtonId()) {
-                                        case 1:
+                                        case ROUGE_ID:
                                             e = ColorEnum.Rouge;
                                             break;
-                                        case 2:
+                                        case BLANC_ID:
                                             e = ColorEnum.Blanc;
                                             break;
-                                        case 3:
+                                        case ROSE_ID:
                                             e = ColorEnum.Rose;
                                             break;
                                     }

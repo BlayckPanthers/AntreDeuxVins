@@ -1,20 +1,13 @@
 package com.ingesup.fabienlebon.antredeuxvins.Adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.ColorSpace;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 
 import com.ingesup.fabienlebon.antredeuxvins.R;

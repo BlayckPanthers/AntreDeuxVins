@@ -44,7 +44,6 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO : CustomDialog ajout d'un vin à la cave + Pull refresh sur la listview
 
                 DialogFragment newFragment = new AddWineDialog();
                 newFragment.show(getSupportFragmentManager(),"addWine");
@@ -124,8 +123,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        cellarAdapter = new CellarAdapter(CellarActivity.this, winesList);
-        wineListView.setAdapter(cellarAdapter);
+        cellarAdapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
 
 
