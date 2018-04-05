@@ -47,12 +47,9 @@ public class CellarAdapter extends ArrayAdapter<Wine> {
         viewHolder.name.setText(wine.getName());
         viewHolder.food.setText(wine.getFoodsList().replace(" ",",").substring(0,wine.getFoodsList().length()-1));
 
-        convertView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // TODO : Dialog Wine Informations to toggle
-            }
-        });
+
+
+
 
         return convertView;
     }

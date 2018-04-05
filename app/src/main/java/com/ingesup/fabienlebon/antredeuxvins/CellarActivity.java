@@ -10,8 +10,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.ingesup.fabienlebon.antredeuxvins.Adapters.CellarAdapter;
 import com.ingesup.fabienlebon.antredeuxvins.Dialogs.AddWineDialog;
@@ -64,8 +66,6 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
         swipeRefreshLayout.setOnRefreshListener(this);
 
-
-
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -83,6 +83,14 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
             }
         });
 
+
+        wineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
+                // When clicked, show a toast
+                Toast.makeText(getApplicationContext(),
+                        "test" + position  + " id : " + id, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private List<Wine> genererWines() {

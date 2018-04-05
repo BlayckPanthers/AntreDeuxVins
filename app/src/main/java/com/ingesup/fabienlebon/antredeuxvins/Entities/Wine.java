@@ -107,7 +107,8 @@ public class Wine {
     public String getFoodsList(){
         String foodString = "";
         for (Food foodElement : this.foods){
-            foodString += foodElement.name() + " " ;
+            if(foodElement != null)
+                foodString += foodElement.name() + " " ;
 
         }
         return foodString;
