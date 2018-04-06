@@ -1,10 +1,13 @@
 package com.ingesup.fabienlebon.antredeuxvins.Entities;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by fabienlebon on 16/03/2018.
  */
 
-public class User {
+public class User implements Parcelable{
     private String Mail;
     private String Name;
     private String Password;
@@ -21,11 +24,13 @@ public class User {
         Mail = mail;
         Name = name;
         Password = password;
+        Token = "";
     }
 
     public User(String mail, String password){
-        this.Mail       = mail;
-        this.Password   = password;
+        Mail       = mail;
+        Password   = password;
+        Token = "";
     }
 
     public String getMail() {
@@ -60,5 +65,36 @@ public class User {
 
     public void setPassword(String password) {
         Password = password;
+    }
+
+    public User (Parcel in){
+        Mail = in.readString();
+        Name = in.readString();
+        Password = in.readString();
+        Token = in.readString();
+
+    }
+
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>(){
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(Mail);
+        parcel.writeString(Name);
+        parcel.writeString(Password);
+        parcel.writeString(Token);
     }
 }

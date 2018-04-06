@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ingesup.fabienlebon.antredeuxvins.Tasks.TaskService;
@@ -46,8 +48,21 @@ public class MainActivity extends AppCompatActivity implements TaskService.OnAsy
         mailWrapper     = (TextInputLayout) findViewById(R.id.login_TIL_Mailwrapper);
         pswWrapper      = (TextInputLayout) findViewById(R.id.login_TIL_pswWrapper);
 
+        TextView textView = (TextView) findViewById(R.id.textViewLink);
+        textView.setText(Html.fromHtml(getString(R.string.inscrivez_vous)));
+
         emailValidator  = new EmailValidator();
         encryptPassword = new EncryptPassword();
+
+        Intent intent = getIntent();
+        Bundle extra = intent.getExtras();
+
+
+        if(extra != null) {
+            User userFromRegister = (User) getIntent().getParcelableExtra("parcel_user");
+            mailWrapper.getEditText().setText(userFromRegister.getMail());
+            pswWrapper.getEditText().setText(userFromRegister.getPassword());
+        }
 
     }
 

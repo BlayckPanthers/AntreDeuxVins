@@ -59,5 +59,6 @@
     <string name="rouge">Rouge</string>
     <string name="blanc">Blanc</string>
     <string name="ros">Rosé</string>
+    <string name="inscrivez_vous">Vous n\'avez pas de comptes ? &lt;u>Inscrivez-vous !&lt;/u></string>
 
 </resources>

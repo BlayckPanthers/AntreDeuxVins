@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="Vous n'avez pas de comptes ? Inscrivez-vous !"
+            android:text="@string/inscrivez_vous"
             android:onClick="loginToRegisterOnclick"
             />
 
