@@ -60,8 +60,10 @@ public class MainActivity extends AppCompatActivity implements TaskService.OnAsy
 
         if(extra != null) {
             User userFromRegister = (User) getIntent().getParcelableExtra("parcel_user");
-            mailWrapper.getEditText().setText(userFromRegister.getMail());
-            pswWrapper.getEditText().setText(userFromRegister.getPassword());
+            if(user != null){
+                mailWrapper.getEditText().setText(userFromRegister.getMail());
+                pswWrapper.getEditText().setText(userFromRegister.getPassword());
+            }
         }
 
     }
