@@ -8,6 +8,14 @@ public class User {
     private String Mail;
     private String Name;
     private String Password;
+    private String Token;
+
+    public User(String mail, String name, String password, String token) {
+        Mail = mail;
+        Name = name;
+        Password = password;
+        Token = token;
+    }
 
     public User(String mail, String name, String password) {
         Mail = mail;
@@ -23,6 +31,15 @@ public class User {
     public String getMail() {
 
         return Mail;
+    }
+
+    public String getToken() {
+
+        return Token;
+    }
+
+    public void setToken(String Token) {
+        this.Token = Token;
     }
 
     public void setMail(String mail) {

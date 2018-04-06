@@ -13,11 +13,11 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         >
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewLogo"
             android:layout_width="match_parent"
             android:layout_height="77dp"
             app:srcCompat="@drawable/antredeuxvins_logo" />
@@ -26,9 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_margin="50dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:layout_marginTop="60dp"
+        android:layout_below="@+id/LayoutPresentation"
         android:background="@drawable/linaerlayout_border">
 
         <!--  login Label -->
@@ -68,7 +69,9 @@
             android:id="@+id/buttonConnexion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="60dp"
             android:gravity="center"
             android:text="@string/login_valid_form"
             android:background="@color/colorPrimary"
@@ -79,7 +82,7 @@
             android:id="@+id/textViewLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_margin="15dp"
             android:text="Vous n'avez pas de comptes ? Inscrivez-vous !"
             android:onClick="loginToRegisterOnclick"
             />
