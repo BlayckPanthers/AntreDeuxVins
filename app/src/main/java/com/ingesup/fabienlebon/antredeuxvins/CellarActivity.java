@@ -23,15 +23,22 @@ import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
+import com.ingesup.fabienlebon.antredeuxvins.Tasks.TaskService;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class CellarActivity extends FragmentActivity implements AddWineDialog.addWineDialogListener, OnRefreshListener{
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
-    private static String TAG = "CellarActivity";
+public class CellarActivity extends FragmentActivity implements AddWineDialog.addWineDialogListener, OnRefreshListener, TaskService.OnAsyncRequestComplete{
+
+    private static final String TAG = "CellarActivity";
+    private static final String apiURL = "https://reqres.in/api/login";
 
     private ListView wineListView;
     private EditText searchEditText;
@@ -39,6 +46,10 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     private List<Wine> winesList ;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private ArrayList<NameValuePair> params ;
+    private String results ="";
+    private JSONObject objects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +156,10 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, Wine n) {
         Log.i(TAG, "onDialogPositiveClick: " + n.toString());
-        winesList.add(n);
+        // winesList.add(n);
+        params = getParams(n);
+        TaskService getPosts = new TaskService(this, "POST", params,"POST_WINE");
+        getPosts.execute(apiURL);
     }
 
     @Override
@@ -155,10 +169,38 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
     @Override
     public void onRefresh() {
+        //TODO getWines
         swipeRefreshLayout.setRefreshing(true);
         cellarAdapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
 
+    }
 
+    @Override
+    public void asyncResponse(String response, String label) {
+        switch(label){
+            //TODO get list of wine
+            case "GET_WINES" :
+                Log.i(TAG, "asyncResponse: GET_WINES" );
+                break;
+            //TODO post wine
+            case "POST_WINE" :
+                Log.i(TAG, "asyncResponse: POST_WINE" );
+                break;
+
+        }
+    }
+
+
+    public ArrayList<NameValuePair> getParams(Wine wine){
+        // define and ArrayList whose elements are of type NameValuePair
+        ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("name", wine.getName()));
+        params.add(new BasicNameValuePair("millesime", String.valueOf(wine.getMillesimeYear())));
+        params.add(new BasicNameValuePair("color", wine.getColor().name()));
+        params.add(new BasicNameValuePair("country", wine.getCountry().name()));
+        params.add(new BasicNameValuePair("volume", String.valueOf(wine.getVolume())));
+        params.add(new BasicNameValuePair("foods", wine.getFoodsList()));
+        return params;
     }
 }

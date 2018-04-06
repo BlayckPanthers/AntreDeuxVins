@@ -1,6 +1,8 @@
 package com.ingesup.fabienlebon.antredeuxvins;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.util.Log;
@@ -9,12 +11,18 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
+import com.ingesup.fabienlebon.antredeuxvins.Dialogs.AddWineDialog;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
+import com.ingesup.fabienlebon.antredeuxvins.Entities.User;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
+import com.ingesup.fabienlebon.antredeuxvins.Tasks.TaskService;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -22,17 +30,31 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class WineActivity extends Activity {
+import cz.msebera.android.httpclient.NameValuePair;
+import cz.msebera.android.httpclient.message.BasicNameValuePair;
+
+public class WineActivity extends Activity  implements TaskService.OnAsyncRequestComplete{
 
     private static final String TAG = "WineActivity";
+    private static final String apiURL = "https://reqres.in/api/login";
+    private static final int ROUGE_ID = 1000;
+    private static final int BLANC_ID = 1001;
+    private static final int ROSE_ID  = 1002;
 
     private ArrayList<TextInputLayout> listTIL ;
     private ArrayList<RadioButton> listRadioButton ;
     private ArrayList<CheckBox> listCheckBox;
     private TextInputLayout TILname, TILmillesime, TILvolume;
+    private RadioGroup type;
     private RadioButton rouge,blanc,rose;
     private CheckBox viande, fromage, crustace;
     private Button update,cancel,accept;
+    private ColorEnum e;
+    private Wine wine, newWine;
+
+    private ArrayList<NameValuePair> params ;
+    private String results ="";
+    private JSONObject objects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +74,13 @@ public class WineActivity extends Activity {
         for(String s : list)
             foodList.add(Food.valueOf(s));
 
-        Wine n = new Wine(Integer.valueOf(Id), name, new Date(Integer.valueOf(millesime)), Float.valueOf(volume), ColorEnum.valueOf(color), foodList, Country.valueOf(country));
+        wine = new Wine(Integer.valueOf(Id), name, new Date(Integer.valueOf(millesime)), Float.valueOf(volume), ColorEnum.valueOf(color), foodList, Country.valueOf(country));
 
         TILname = (TextInputLayout) findViewById(R.id.activity_name_wine);
         TILmillesime = (TextInputLayout) findViewById(R.id.activity_millesime_wine);
         TILvolume = (TextInputLayout) findViewById(R.id.activity_volume_wine);
+
+        type = (RadioGroup) findViewById(R.id.activity_type_wine);
 
         rouge = (RadioButton) findViewById(R.id.rouge1);
         blanc = (RadioButton) findViewById(R.id.blanc1);
@@ -91,6 +115,10 @@ public class WineActivity extends Activity {
             add(fromage);
             add(crustace);
         }};
+
+        rouge.setId(ROUGE_ID);
+        blanc.setId(BLANC_ID);
+        rose.setId(ROSE_ID);
 
 
         if(ColorEnum.valueOf(color).equals(ColorEnum.Rouge))
@@ -166,11 +194,99 @@ public class WineActivity extends Activity {
         update.setVisibility(View.VISIBLE);
         accept.setVisibility(View.GONE);
         cancel.setVisibility(View.GONE);
+
+        if(!TILname.getEditText().getText().toString().equals("") && !TILmillesime.getEditText().getText().toString().equals("")
+                && !TILvolume.getEditText().getText().toString().equals("")) {
+            if(Integer.valueOf(TILmillesime.getEditText().getText().toString()) > 1900
+                    && Integer.valueOf(TILmillesime.getEditText().getText().toString()) < 2018) {
+                if(type.getCheckedRadioButtonId() > 0) {
+                    switch(type.getCheckedRadioButtonId()) {
+                        case ROUGE_ID:
+                            e = ColorEnum.Rouge;
+                            break;
+                        case BLANC_ID:
+                            e = ColorEnum.Blanc;
+                            break;
+                        case ROSE_ID:
+                            e = ColorEnum.Rose;
+                            break;
+                    }
+                    if(viande.isChecked() || fromage.isChecked() || crustace.isChecked()) {
+                        List<Food> foodList = new ArrayList<Food>();
+                        if(viande.isChecked())
+                            foodList.add(Food.Viande);
+                        if(fromage.isChecked())
+                            foodList.add(Food.Fromage);
+                        if(crustace.isChecked())
+                            foodList.add(Food.Crustace);
+
+
+                        newWine = new Wine(13,TILname.getEditText().getText().toString(),
+                                new Date(Integer.valueOf(TILmillesime.getEditText().getText().toString())),
+                                Float.valueOf(TILvolume.getEditText().getText().toString()),
+                                e,
+                                foodList, Country.France);
+
+                        params = getParams();
+                        TaskService getPosts = new TaskService(this, "POST", params);
+                        getPosts.execute(apiURL);
+
+                    }
+                    else{
+                        Toast.makeText(this,"Choisissez au moins un accompagnement",Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(this,"Choisissez un type de vin",Toast.LENGTH_SHORT).show();
+                }
+            }
+            else{
+                TILmillesime.setError("Entrez une date comprise entre 1900 et 2018");
+            }
+
+        }
+        else
+        {
+            Toast.makeText(this,"Veuillez remplir les champs",Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void finish() {
         super.finish();
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
+
+
+
+    private ArrayList<NameValuePair> getParams() {
+        // define and ArrayList whose elements are of type NameValuePair
+        ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("name", wine.getName()));
+        params.add(new BasicNameValuePair("millesime", String.valueOf(wine.getMillesimeYear())));
+        params.add(new BasicNameValuePair("color", wine.getColor().name()));
+        params.add(new BasicNameValuePair("country", wine.getCountry().name()));
+        params.add(new BasicNameValuePair("volume", String.valueOf(wine.getVolume())));
+        params.add(new BasicNameValuePair("foods", wine.getFoodsList()));
+
+        return params;
+    }
+
+    @Override
+    public void asyncResponse(String response, String flag) {
+
+        try {
+            objects = new JSONObject(response);
+
+            if(objects.has("token")){
+                //TODO some verif ... OK
+            }
+            else {
+                Toast.makeText(this, "Une erreur est survenue", Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

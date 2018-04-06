@@ -37,7 +37,8 @@ import java.util.List;
 
 public class AddWineDialog extends DialogFragment {
 
-    private static String TAG = "addWineFragment";
+    private static final String TAG = "addWineFragment";
+
 
     private TextInputLayout name,millesime,volume;
     private RadioGroup type;

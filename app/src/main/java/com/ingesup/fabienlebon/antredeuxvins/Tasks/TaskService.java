@@ -44,8 +44,17 @@ public class TaskService extends AsyncTask<String,Integer,String> {
     String method = "GET";
     List<NameValuePair> parameters = null;
     ProgressDialog pDialog = null;
+    String label;
 
-    // Three Constructors
+    // Four Constructors
+    public TaskService(Activity a, String m, List<NameValuePair> p, String l) {
+        caller = (OnAsyncRequestComplete) a;
+        context = a;
+        method = m;
+        parameters = p;
+        label = l;
+    }
+
     public TaskService(Activity a, String m, List<NameValuePair> p) {
         caller = (OnAsyncRequestComplete) a;
         context = a;
@@ -65,7 +74,8 @@ public class TaskService extends AsyncTask<String,Integer,String> {
     }
 
     public interface OnAsyncRequestComplete {
-        public void asyncResponse(String response);
+        public void asyncResponse(String response, String flag);
+
     }
 
     private String get(String address) {
@@ -156,7 +166,7 @@ public class TaskService extends AsyncTask<String,Integer,String> {
         if (pDialog != null && pDialog.isShowing()) {
             pDialog.dismiss();
         }
-        caller.asyncResponse(s);
+        caller.asyncResponse(s,label);
     }
 
     @Override
@@ -169,7 +179,7 @@ public class TaskService extends AsyncTask<String,Integer,String> {
         if (pDialog != null && pDialog.isShowing()) {
             pDialog.dismiss();
         }
-        caller.asyncResponse(s);
+        caller.asyncResponse(s,label);
     }
 
     @Override

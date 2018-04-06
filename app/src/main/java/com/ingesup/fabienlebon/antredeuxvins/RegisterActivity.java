@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
                     user = new User(mail,name,password);
 
                     params = getParams();
-                    TaskService getPosts = new TaskService(this, "POST", params);
+                    TaskService getPosts = new TaskService(this, "POST", params, "REGISTER");
                     getPosts.execute(apiURL);
                 }
                 else{
@@ -95,22 +95,25 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
 
 
     @Override
-    public void asyncResponse(String response) {
-        try {
-            objects = new JSONObject(response);
+    public void asyncResponse(String response, String label) {
+        if(label.equals("REGISTER")){
+            try {
+                objects = new JSONObject(response);
 
-            if(objects.has("token")){
-                user.setToken(objects.getString("token"));
-                Intent i = new Intent(this, MainActivity.class);
-                i.putExtra("parcel_user", user);
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if(objects.has("token")){
+                    user.setToken(objects.getString("token"));
+                    Intent i = new Intent(this, MainActivity.class);
+                    i.putExtra("parcel_user", user);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                else {
+                    mailWrapper.setError("Mail ou password incorrect(s)");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            else {
-                mailWrapper.setError("Mail ou password incorrect(s)");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+
         }
     }
 

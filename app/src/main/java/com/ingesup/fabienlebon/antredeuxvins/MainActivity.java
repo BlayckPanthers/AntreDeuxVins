@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity implements TaskService.OnAsy
     private TextInputLayout mailWrapper, pswWrapper;
 
     private User user;
-    private String apiURL = "https://reqres.in/api/login";
+    private static final String apiURL = "https://reqres.in/api/login";
     private ArrayList<NameValuePair> params ;
     private String results ="";
     private JSONObject objects;
@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements TaskService.OnAsy
                 user = new User(email,password);
 
                 params = getParams();
-                TaskService getPosts = new TaskService(this, "POST", params);
+                TaskService getPosts = new TaskService(this, "POST", params,"LOGIN");
                 getPosts.execute(apiURL);
 
             }
@@ -100,22 +100,25 @@ public class MainActivity extends AppCompatActivity implements TaskService.OnAsy
     }
 
     @Override
-    public void asyncResponse(String response) {
+    public void asyncResponse(String response, String label) {
         // create a JSON array from the response string
-        try {
-        objects = new JSONObject(response);
+        if(label.equals("LOGIN")){
+            try {
+            objects = new JSONObject(response);
 
-            if(objects.has("token")){
-                user.setToken(objects.getString("token"));
-                Intent i = new Intent(this.getApplicationContext(), CellarActivity.class);
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                if(objects.has("token")){
+                    user.setToken(objects.getString("token"));
+                    Intent i = new Intent(this.getApplicationContext(), CellarActivity.class);
+                    startActivity(i);
+                    overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                }
+                else {
+                    mailWrapper.setError("Mail ou password incorrect(s)");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-            else {
-                mailWrapper.setError("Mail ou password incorrect(s)");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+
         }
     }
 
