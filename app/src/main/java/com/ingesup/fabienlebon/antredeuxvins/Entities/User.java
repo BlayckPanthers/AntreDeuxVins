@@ -33,6 +33,8 @@ public class User implements Parcelable{
         Token = "";
     }
 
+    public User(){}
+
     public String getMail() {
 
         return Mail;
@@ -41,6 +43,16 @@ public class User implements Parcelable{
     public String getToken() {
 
         return Token;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "Mail='" + Mail + '\'' +
+                ", Name='" + Name + '\'' +
+                ", Password='" + Password + '\'' +
+                ", Token='" + Token + '\'' +
+                '}';
     }
 
     public void setToken(String Token) {

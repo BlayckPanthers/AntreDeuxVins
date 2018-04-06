@@ -130,18 +130,6 @@ public class Wine {
         return foodString;
     }
 
-    protected Wine(Parcel in) {
-        id = in.readInt();
-        Name=in.readString();
-        Millesime=(java.util.Date) in.readSerializable();
-        Color= ColorEnum.valueOf(in.readString());
-        Volume=in.readFloat();
-        List<String> foodStrings = new ArrayList<String>();
-        in.readList(foodStrings, null);
-        for (String foodElement : foodStrings) {
-            foods.add(Food.valueOf(foodElement));
-        }
-    }
 
     @Override
     public String toString() {

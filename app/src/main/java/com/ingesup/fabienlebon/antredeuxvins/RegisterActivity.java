@@ -55,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
     }
 
     public void registerToLoginOnclick(View view) {
-        Intent i = new Intent(this.getApplicationContext(), MainActivity.class);
+        Intent i = new Intent(this.getApplicationContext(), LoginActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
@@ -102,7 +102,7 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
 
                 if(objects.has("token")){
                     user.setToken(objects.getString("token"));
-                    Intent i = new Intent(this, MainActivity.class);
+                    Intent i = new Intent(this, LoginActivity.class);
                     i.putExtra("parcel_user", user);
                     startActivity(i);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

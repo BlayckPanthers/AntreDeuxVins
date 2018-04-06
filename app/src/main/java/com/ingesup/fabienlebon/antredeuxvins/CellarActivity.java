@@ -24,6 +24,7 @@ import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 import com.ingesup.fabienlebon.antredeuxvins.Tasks.TaskService;
+import com.ingesup.fabienlebon.antredeuxvins.Tools.GlobalData;
 
 import org.json.JSONObject;
 
@@ -66,6 +67,9 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
             }
         });
+
+        Log.i(TAG, "onCreate: Globaldata" + GlobalData.getInstance().getUserDao().selectionnerTout().toString());
+
 
         wineListView = (ListView) findViewById(R.id.cellar_wineList);
         searchEditText = (EditText) findViewById(R.id.cellar_search);
