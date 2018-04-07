@@ -263,6 +263,7 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
     private ArrayList<NameValuePair> getParams() {
         // define and ArrayList whose elements are of type NameValuePair
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("id",String.valueOf(wine.getId())));
         params.add(new BasicNameValuePair("name", wine.getName()));
         params.add(new BasicNameValuePair("millesime", String.valueOf(wine.getMillesimeYear())));
         params.add(new BasicNameValuePair("color", wine.getColor().name()));

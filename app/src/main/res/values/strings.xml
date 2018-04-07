@@ -64,4 +64,10 @@
     <string name="Bonjour">Hello :</string>
     <string name="email">mail :</string>
 
+
+    <string name="action_settings">Settings</string>
+    <string name="my_cart">My Cart</string>
+    <string name="delete">DELETE</string>
+
+
 </resources>

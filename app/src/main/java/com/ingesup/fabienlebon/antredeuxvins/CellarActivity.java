@@ -1,22 +1,25 @@
 package com.ingesup.fabienlebon.antredeuxvins;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Parcelable;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
-
+import android.widget.RelativeLayout;
 import com.ingesup.fabienlebon.antredeuxvins.Adapters.CellarAdapter;
 import com.ingesup.fabienlebon.antredeuxvins.Dialogs.AddWineDialog;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
@@ -25,6 +28,7 @@ import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 import com.ingesup.fabienlebon.antredeuxvins.Tasks.TaskService;
 import com.ingesup.fabienlebon.antredeuxvins.Tools.GlobalData;
+import com.ingesup.fabienlebon.antredeuxvins.Tools.RecyclerItemTouchHelper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,12 +42,16 @@ import java.util.List;
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
-public class CellarActivity extends FragmentActivity implements AddWineDialog.addWineDialogListener, OnRefreshListener, TaskService.OnAsyncRequestComplete{
+public class CellarActivity extends FragmentActivity implements AddWineDialog.addWineDialogListener, OnRefreshListener, TaskService.OnAsyncRequestComplete, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
 
     private static final String TAG = "CellarActivity";
     private static final String apiURL = "https://reqres.in/api/login";
 
-    private ListView wineListView;
+    private RelativeLayout relativeLayout;
+
+    private RecyclerView wineListView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     private EditText searchEditText;
     private CellarAdapter cellarAdapter;
     private List<Wine> winesList ;
@@ -51,8 +59,9 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private ArrayList<NameValuePair> params ;
-    private String results ="";
     private JSONObject objects;
+
+    private Boolean isDeleted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +81,9 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
         Log.i(TAG, "onCreate: Globaldata" + GlobalData.getInstance().getUserDao().selectionnerTout().toString());
 
+        relativeLayout = (RelativeLayout) findViewById(R.id.cellar_layout_id);
 
-        wineListView = (ListView) findViewById(R.id.cellar_wineList);
+        wineListView = (RecyclerView) findViewById(R.id.cellar_wineList);
         searchEditText = (EditText) findViewById(R.id.cellar_search);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
 
@@ -81,10 +91,20 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
         List<Wine> wines = genererWines();
 
-        cellarAdapter = new CellarAdapter(CellarActivity.this, wines);
-        wineListView.setAdapter(cellarAdapter);
+        wineListView.setHasFixedSize(true);
+        cellarAdapter = new CellarAdapter(wines,this);
+
+
+        mLayoutManager = new LinearLayoutManager(this);
+        wineListView.addItemDecoration(new DividerItemDecoration(wineListView.getContext(), 1));
+        wineListView.setLayoutManager(mLayoutManager);
+
+        mAdapter = cellarAdapter;
+        wineListView.setAdapter(mAdapter);
+
 
         swipeRefreshLayout.setOnRefreshListener(this);
+
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -94,45 +114,38 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                (CellarActivity.this).cellarAdapter.getFilter().filter(charSequence);
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-
+                filter(editable.toString());
             }
         });
 
 
-        wineListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View view,int position, long id) {
-                // When clicked, show a toast
-                Intent intent = new Intent(getApplicationContext(), WineActivity.class);
-                Wine n = (Wine) wineListView.getItemAtPosition(position);
 
-                Log.i(TAG, "onCreate: " +
-                        "id " + n.getId() +
-                        " name " + n.getName() +
-                        " millesime " + n.getMillesime().toString() +
-                        " color " +  n.getColor().name() +
-                        " country " + n.getCountry().name() +
-                        " volume " + String.valueOf(n.getVolume()) +
-                        " foods " + n.getFoodsList()
+        ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, (RecyclerItemTouchHelper.RecyclerItemTouchHelperListener) this);
+        new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(wineListView);
 
-                );
 
-                intent.putExtra("id", String.valueOf(n.getId()));
-                intent.putExtra("Name", n.getName());
-                intent.putExtra("Millesime", String.valueOf(n.getMillesimeYear()));
-                intent.putExtra("ColorEnum", n.getColor().name());
-                intent.putExtra("Country", n.getCountry().name());
-                intent.putExtra("Volume", String.valueOf(n.getVolume()));
-                intent.putExtra("foods",n.getFoodsList());
+    }
 
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    public void filter(String text){
+        List<Wine> temp = new ArrayList();
+        for(Wine d: winesList){
+            //or use .equal(text) with you want equal match
+            //use .toLowerCase() for better matches
+            if(d.toString().toLowerCase().contains(text)){
+                temp.add(d);
             }
-        });
+            else if(d.toString().contains(text)){
+                temp.add(d);
+            }
+
+        }
+        //update recyclerview
+        cellarAdapter.updateList(temp);
     }
 
     public void ShowUserInfo(View view) {
@@ -165,13 +178,71 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         return winesList;
     }
 
+    public ArrayList<NameValuePair> getParams(Wine wine){
+        // define and ArrayList whose elements are of type NameValuePair
+        ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("name", wine.getName()));
+        params.add(new BasicNameValuePair("millesime", String.valueOf(wine.getMillesimeYear())));
+        params.add(new BasicNameValuePair("color", wine.getColor().name()));
+        params.add(new BasicNameValuePair("country", wine.getCountry().name()));
+        params.add(new BasicNameValuePair("volume", String.valueOf(wine.getVolume())));
+        params.add(new BasicNameValuePair("foods", wine.getFoodsList()));
+        return params;
+    }
+
+    @Override
+    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+        if (viewHolder instanceof CellarAdapter.ViewHolder) {
+            isDeleted = true;
+            // get the removed item name to display it in snack bar
+            String name = winesList.get(viewHolder.getAdapterPosition()).getName();
+
+            // backup of removed item for undo purpose
+            final Wine deletedItem = winesList.get(viewHolder.getAdapterPosition());
+            final int deletedIndex = viewHolder.getAdapterPosition();
+
+            // remove the item from recycler view
+            cellarAdapter.removeItem(viewHolder.getAdapterPosition());
+
+            // showing snack bar with Undo option
+            Snackbar snackbar = Snackbar
+                    .make(relativeLayout,name + " removed from cellar!", Snackbar.LENGTH_LONG);
+            snackbar.setAction("UNDO", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    isDeleted = false;
+                    // undo is selected, restore the deleted item
+                    cellarAdapter.restoreItem(deletedItem, deletedIndex);
+                }
+            });
+            snackbar.setActionTextColor(Color.YELLOW);
+            snackbar.show();
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(isDeleted){
+                        // TODO DELETE HERE
+                        Log.i(TAG, "onSwiped: DELETED");
+                        /*
+                        TaskService getPosts = new TaskService(this, "GET", getParams(deletedItem),"DELETE WINE");
+                        getPosts.execute(apiURL);
+
+                         */
+                    }
+                }
+            }, 2000);
+
+        }
+    }
+
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, Wine n) {
         Log.i(TAG, "onDialogPositiveClick: " + n.toString());
-        // winesList.add(n);
-        params = getParams(n);
+        //winesList.add(n);
+        /*params = getParams(n);
         TaskService getPosts = new TaskService(this, "POST", params,"POST_WINE");
-        getPosts.execute(apiURL);
+        getPosts.execute(apiURL);*/
     }
 
     @Override
@@ -189,8 +260,8 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
          */
 
-        TaskService getPosts = new TaskService(this, "GET", params,"GET_WINES");
-        getPosts.execute("https://reqres.in/api/unknown");
+        /*TaskService getPosts = new TaskService(this, "GET", params,"GET_WINES");
+        getPosts.execute("https://reqres.in/api/unknown");*/
         cellarAdapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
 
@@ -238,17 +309,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     }
 
 
-    public ArrayList<NameValuePair> getParams(Wine wine){
-        // define and ArrayList whose elements are of type NameValuePair
-        ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("name", wine.getName()));
-        params.add(new BasicNameValuePair("millesime", String.valueOf(wine.getMillesimeYear())));
-        params.add(new BasicNameValuePair("color", wine.getColor().name()));
-        params.add(new BasicNameValuePair("country", wine.getCountry().name()));
-        params.add(new BasicNameValuePair("volume", String.valueOf(wine.getVolume())));
-        params.add(new BasicNameValuePair("foods", wine.getFoodsList()));
-        return params;
-    }
+
 
     @Override
     public void onBackPressed() {
