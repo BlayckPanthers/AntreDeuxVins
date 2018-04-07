@@ -40,18 +40,19 @@ public class AddWineDialog extends DialogFragment {
     private static final String TAG = "addWineFragment";
 
 
-    private TextInputLayout name,millesime,volume;
+    private TextInputLayout name, millesime, volume;
     private RadioGroup type;
     private CheckBox viande, fromage, crustace;
     private RadioButton rouge, blanc, rose;
 
     private static final int ROUGE_ID = 1000;
     private static final int BLANC_ID = 1001;
-    private static final int ROSE_ID  = 1002;
+    private static final int ROSE_ID = 1002;
 
 
     public static interface addWineDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog, Wine n);
+
         public void onDialogNegativeClick(DialogFragment dialog);
     }
 
@@ -62,21 +63,21 @@ public class AddWineDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         // Get the layout inflater
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout. dialog_addwine, null);
+        View view = inflater.inflate(R.layout.dialog_addwine, null);
 
-        name        = (TextInputLayout) view.findViewById(R.id.fragment_name_wine);
-        volume      = (TextInputLayout) view.findViewById(R.id.fragment_volume);
-        millesime   = (TextInputLayout) view.findViewById(R.id.fragment_millesime);
+        name = (TextInputLayout) view.findViewById(R.id.fragment_name_wine);
+        volume = (TextInputLayout) view.findViewById(R.id.fragment_volume);
+        millesime = (TextInputLayout) view.findViewById(R.id.fragment_millesime);
 
-        type        = (RadioGroup) view.findViewById(R.id.fragment_type_wine);
+        type = (RadioGroup) view.findViewById(R.id.fragment_type_wine);
 
-        viande      = (CheckBox) view.findViewById(R.id.fragment_viande);
-        fromage     = (CheckBox) view.findViewById(R.id.fragment_fromage);
-        crustace    = (CheckBox) view.findViewById(R.id.fragment_crustace);
+        viande = (CheckBox) view.findViewById(R.id.fragment_viande);
+        fromage = (CheckBox) view.findViewById(R.id.fragment_fromage);
+        crustace = (CheckBox) view.findViewById(R.id.fragment_crustace);
 
-        rouge       = (RadioButton) view.findViewById(R.id.rouge1);
-        blanc       = (RadioButton) view.findViewById(R.id.blanc1);
-        rose        = (RadioButton) view.findViewById(R.id.rose1);
+        rouge = (RadioButton) view.findViewById(R.id.rouge1);
+        blanc = (RadioButton) view.findViewById(R.id.blanc1);
+        rose = (RadioButton) view.findViewById(R.id.rose1);
 
         rouge.setId(ROUGE_ID);
         blanc.setId(BLANC_ID);
@@ -92,12 +93,12 @@ public class AddWineDialog extends DialogFragment {
                         ColorEnum e = null;
                         Log.i(TAG, "type vin : " + type.getCheckedRadioButtonId());
 
-                        if(!name.getEditText().getText().toString().equals("") && !millesime.getEditText().getText().toString().equals("")
+                        if (!name.getEditText().getText().toString().equals("") && !millesime.getEditText().getText().toString().equals("")
                                 && !volume.getEditText().getText().toString().equals("")) {
-                            if(Integer.valueOf(millesime.getEditText().getText().toString()) > 1900
+                            if (Integer.valueOf(millesime.getEditText().getText().toString()) > 1900
                                     && Integer.valueOf(millesime.getEditText().getText().toString()) < 2018) {
-                                if(type.getCheckedRadioButtonId() > 0) {
-                                    switch(type.getCheckedRadioButtonId()) {
+                                if (type.getCheckedRadioButtonId() > 0) {
+                                    switch (type.getCheckedRadioButtonId()) {
                                         case ROUGE_ID:
                                             e = ColorEnum.Rouge;
                                             break;
@@ -108,39 +109,34 @@ public class AddWineDialog extends DialogFragment {
                                             e = ColorEnum.Rose;
                                             break;
                                     }
-                                    if(viande.isChecked() || fromage.isChecked() || crustace.isChecked()) {
+                                    if (viande.isChecked() || fromage.isChecked() || crustace.isChecked()) {
                                         List<Food> foodList = new ArrayList<Food>();
-                                        if(viande.isChecked())
+                                        if (viande.isChecked())
                                             foodList.add(Food.Viande);
-                                        if(fromage.isChecked())
+                                        if (fromage.isChecked())
                                             foodList.add(Food.Fromage);
-                                        if(crustace.isChecked())
+                                        if (crustace.isChecked())
                                             foodList.add(Food.Crustace);
 
 
-                                        Wine wine = new Wine(13,name.getEditText().getText().toString(),
+                                        Wine wine = new Wine(13, name.getEditText().getText().toString(),
                                                 new Date(Integer.valueOf(millesime.getEditText().getText().toString())),
                                                 Float.valueOf(volume.getEditText().getText().toString()),
                                                 e,
                                                 foodList, Country.France);
                                         mListener.onDialogPositiveClick(AddWineDialog.this, wine);
+                                    } else {
+                                        Toast.makeText(getContext(), getText(R.string.addwine_error_food_choice), Toast.LENGTH_SHORT).show();
                                     }
-                                    else{
-                                        Toast.makeText(getContext(),getText(R.string.addwine_error_food_choice),Toast.LENGTH_SHORT).show();
-                                    }
+                                } else {
+                                    Toast.makeText(getContext(), getText(R.string.addwine_error_type_wine), Toast.LENGTH_SHORT).show();
                                 }
-                                else{
-                                    Toast.makeText(getContext(),getText(R.string.addwine_error_type_wine),Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                            else{
+                            } else {
                                 millesime.setError(getText(R.string.addwine_error_millesime_year));
                             }
 
-                        }
-                        else
-                        {
-                            Toast.makeText(getContext(),getText(R.string.login_error_empty_fields),Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), getText(R.string.login_error_empty_fields), Toast.LENGTH_SHORT).show();
                         }
                     }
                 })

@@ -7,7 +7,7 @@ import android.os.Parcelable;
  * Created by fabienlebon on 16/03/2018.
  */
 
-public class User implements Parcelable{
+public class User implements Parcelable {
     private String Mail;
     private String Name;
     private String Password;
@@ -27,13 +27,14 @@ public class User implements Parcelable{
         Token = "";
     }
 
-    public User(String mail, String password){
-        Mail       = mail;
-        Password   = password;
+    public User(String mail, String password) {
+        Mail = mail;
+        Password = password;
         Token = "";
     }
 
-    public User(){}
+    public User() {
+    }
 
     public String getMail() {
 
@@ -79,7 +80,7 @@ public class User implements Parcelable{
         Password = password;
     }
 
-    public User (Parcel in){
+    public User(Parcel in) {
         Mail = in.readString();
         Name = in.readString();
         Password = in.readString();
@@ -87,10 +88,11 @@ public class User implements Parcelable{
 
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>(){
+    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
         public User createFromParcel(Parcel in) {
             return new User(in);
         }
+
         public User[] newArray(int size) {
             return new User[size];
         }

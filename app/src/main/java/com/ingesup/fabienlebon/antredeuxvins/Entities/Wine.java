@@ -43,7 +43,7 @@ public class Wine {
         this.foods = food;
     }
 
-    public Wine(int id, String name, Date millesime, float volume, ColorEnum color,List<Food> food, Country cntry) {
+    public Wine(int id, String name, Date millesime, float volume, ColorEnum color, List<Food> food, Country cntry) {
         id = id;
         Name = name;
         Millesime = millesime;
@@ -77,7 +77,7 @@ public class Wine {
         Millesime = millesime;
     }
 
-    public int getMillesimeYear(){
+    public int getMillesimeYear() {
         int year = Integer.parseInt(new SimpleDateFormat("yyyy").format(Millesime));
         return year;
     }
@@ -94,7 +94,7 @@ public class Wine {
         return Country;
     }
 
-    public void setPays (Country country) {
+    public void setPays(Country country) {
         this.Country = country;
     }
 
@@ -122,10 +122,10 @@ public class Wine {
         this.foods = foods;
     }
 
-    public String getFoodsList(Context ctx){
-        String foodsList ="";
-        for(Food f : foods){
-            switch (f){
+    public String getFoodsList(Context ctx) {
+        String foodsList = "";
+        for (Food f : foods) {
+            switch (f) {
                 case Viande:
                     foodsList += ctx.getText(R.string.addwine_wine_food_meat) + ",";
                     break;
@@ -139,9 +139,6 @@ public class Wine {
         }
         return foodsList;
     }
-
-
-
 
 
 }

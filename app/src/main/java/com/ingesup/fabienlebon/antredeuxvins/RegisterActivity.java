@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
-public class RegisterActivity extends AppCompatActivity implements TaskService.OnAsyncRequestComplete{
+public class RegisterActivity extends AppCompatActivity implements TaskService.OnAsyncRequestComplete {
 
     private static final String TAG = "RegisterActivity";
     private TextInputLayout mailWrapper, nameWrapper, passWrapper, passRepWrapper;
@@ -32,8 +32,8 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
     private EmailValidator emailValidator;
     private EncryptPassword encryptPassword;
     private String apiURL = "https://reqres.in/api/register";
-    private ArrayList<NameValuePair> params ;
-    private String results ="";
+    private ArrayList<NameValuePair> params;
+    private String results = "";
     private JSONObject objects;
     private User user;
 
@@ -44,15 +44,15 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
         setContentView(R.layout.activity_register);
         getSupportActionBar().hide();
 
-        mailWrapper     = (TextInputLayout) findViewById(R.id.register_TIL_Mailwrapper);
-        nameWrapper     = (TextInputLayout) findViewById(R.id.register_TIL_NameWrapper);
-        passWrapper     = (TextInputLayout) findViewById(R.id.register_TIL_PassWrapper);
-        passRepWrapper  = (TextInputLayout) findViewById(R.id.register_TIL_PassRepWrapper);
+        mailWrapper = (TextInputLayout) findViewById(R.id.register_TIL_Mailwrapper);
+        nameWrapper = (TextInputLayout) findViewById(R.id.register_TIL_NameWrapper);
+        passWrapper = (TextInputLayout) findViewById(R.id.register_TIL_PassWrapper);
+        passRepWrapper = (TextInputLayout) findViewById(R.id.register_TIL_PassRepWrapper);
 
         TextView textviexLink = (TextView) findViewById(R.id.textViewLink);
         textviexLink.setText(Html.fromHtml(getString(R.string.register_link_login)));
 
-        emailValidator  = new EmailValidator();
+        emailValidator = new EmailValidator();
         encryptPassword = new EncryptPassword();
 
     }
@@ -65,52 +65,48 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
 
     public void registerOnclick(View view) {
 
-        mail     = mailWrapper.getEditText().getText().toString();
-        name     = nameWrapper.getEditText().getText().toString();
+        mail = mailWrapper.getEditText().getText().toString();
+        name = nameWrapper.getEditText().getText().toString();
         password = passWrapper.getEditText().getText().toString();
-        passRep  = passRepWrapper.getEditText().getText().toString();
+        passRep = passRepWrapper.getEditText().getText().toString();
 
-        if(!mail.equals("") && !name.equals("") && !password.equals("") && !passRep.equals("")){
-            if(emailValidator.validate(mail)){
+        if (!mail.equals("") && !name.equals("") && !password.equals("") && !passRep.equals("")) {
+            if (emailValidator.validate(mail)) {
                 mailWrapper.setError(null);
-                if(password.equals(passRep)){
+                if (password.equals(passRep)) {
                     passWrapper.setError(null);
-                    Log.i("VAR 1",password);
-                    Log.i("ACCEPT","Tout est OK, envois des données");
-                    user = new User(mail,name,password);
+                    Log.i("VAR 1", password);
+                    Log.i("ACCEPT", "Tout est OK, envois des données");
+                    user = new User(mail, name, password);
 
                     params = getParams();
                     TaskService getPosts = new TaskService(this, "POST", params, "REGISTER");
                     getPosts.execute(apiURL);
-                }
-                else{
+                } else {
                     passWrapper.setError(getText(R.string.register_error_password_same));
                 }
-            }
-            else {
+            } else {
                 mailWrapper.setError(getText(R.string.login_error_invalid_mail));
             }
-        }
-        else {
-            Toast.makeText(getApplicationContext(),R.string.login_error_empty_fields,Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.login_error_empty_fields, Toast.LENGTH_SHORT).show();
         }
     }
 
 
     @Override
     public void asyncResponse(String response, String label) {
-        if(label.equals("REGISTER")){
+        if (label.equals("REGISTER")) {
             try {
                 objects = new JSONObject(response);
 
-                if(objects.has("token")){
+                if (objects.has("token")) {
                     user.setToken(objects.getString("token"));
                     Intent i = new Intent(this, LoginActivity.class);
                     i.putExtra("parcel_user", user);
                     startActivity(i);
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                }
-                else {
+                } else {
                     mailWrapper.setError(getText(R.string.register_error_account_exist));
                 }
             } catch (JSONException e) {

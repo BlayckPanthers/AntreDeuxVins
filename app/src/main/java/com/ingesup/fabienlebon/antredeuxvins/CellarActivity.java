@@ -20,6 +20,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+
 import com.ingesup.fabienlebon.antredeuxvins.Adapters.CellarAdapter;
 import com.ingesup.fabienlebon.antredeuxvins.Dialogs.AddWineDialog;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
@@ -42,7 +43,7 @@ import java.util.List;
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
-public class CellarActivity extends FragmentActivity implements AddWineDialog.addWineDialogListener, OnRefreshListener, TaskService.OnAsyncRequestComplete, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener{
+public class CellarActivity extends FragmentActivity implements AddWineDialog.addWineDialogListener, OnRefreshListener, TaskService.OnAsyncRequestComplete, RecyclerItemTouchHelper.RecyclerItemTouchHelperListener {
 
     private static final String TAG = "CellarActivity";
     private static final String apiURL = "https://reqres.in/api/login";
@@ -54,11 +55,11 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     private RecyclerView.LayoutManager mLayoutManager;
     private EditText searchEditText;
     private CellarAdapter cellarAdapter;
-    private List<Wine> winesList ;
+    private List<Wine> winesList;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    private ArrayList<NameValuePair> params ;
+    private ArrayList<NameValuePair> params;
     private JSONObject objects;
 
     private Boolean isDeleted;
@@ -74,7 +75,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
             public void onClick(View view) {
 
                 DialogFragment newFragment = new AddWineDialog();
-                newFragment.show(getSupportFragmentManager(),"addWine");
+                newFragment.show(getSupportFragmentManager(), "addWine");
 
             }
         });
@@ -92,7 +93,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         List<Wine> wines = genererWines();
 
         wineListView.setHasFixedSize(true);
-        cellarAdapter = new CellarAdapter(wines,this);
+        cellarAdapter = new CellarAdapter(wines, this);
 
 
         mLayoutManager = new LinearLayoutManager(this);
@@ -124,34 +125,28 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         });
 
 
-
         ItemTouchHelper.SimpleCallback itemTouchHelperCallback = new RecyclerItemTouchHelper(0, ItemTouchHelper.LEFT, (RecyclerItemTouchHelper.RecyclerItemTouchHelperListener) this);
         new ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(wineListView);
 
 
     }
 
-    public void filter(String text){
+    public void filter(String text) {
         List<Wine> temp = new ArrayList();
-        for(Wine d: winesList){
+        for (Wine d : winesList) {
             //or use .equal(text) with you want equal match
             //use .toLowerCase() for better matches
-            if(d.getName().toLowerCase().contains(text)){
+            if (d.getName().toLowerCase().contains(text)) {
                 temp.add(d);
-            }
-            else if(d.getName().contains(text)){
+            } else if (d.getName().contains(text)) {
                 temp.add(d);
-            }
-            else if(d.getColor().name().toLowerCase().contains(text)){
+            } else if (d.getColor().name().toLowerCase().contains(text)) {
                 temp.add(d);
-            }
-            else if(d.getColor().name().contains(text)){
+            } else if (d.getColor().name().contains(text)) {
                 temp.add(d);
-            }
-            else if(d.getFoodsList(this).toLowerCase().contains(text)){
+            } else if (d.getFoodsList(this).toLowerCase().contains(text)) {
                 temp.add(d);
-            }
-            else if(d.getFoodsList(this).contains(text)){
+            } else if (d.getFoodsList(this).contains(text)) {
                 temp.add(d);
             }
 
@@ -173,24 +168,24 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         Food[] foodd = new Food[]{Food.Fromage};
         Food[] fooda = new Food[]{Food.Viande, Food.Crustace};
         Food[] foodb = new Food[]{Food.Viande};
-        winesList.add(new Wine(1,"Saint-Emillion",new Date(1995), 1, ColorEnum.Rouge, Arrays.asList(foodc), Country.France));
-        winesList.add(new Wine(2,"Cabernet",new Date(2000), 1, ColorEnum.Rose, Arrays.asList(fooda), Country.France));
-        winesList.add(new Wine(3,"Mouton-cadet",new Date(1890), 1, ColorEnum.Blanc,Arrays.asList(foodb), Country.France));
-        winesList.add(new Wine(4,"Saint-Estephe",new Date(2005), 1, ColorEnum.Rouge,Arrays.asList(foods), Country.France));
-        winesList.add(new Wine(5,"Chateau-neuf-du-pape",new Date(2016), 1, ColorEnum.Rouge,Arrays.asList(foodd), Country.France));
-        winesList.add(new Wine(6,"Beaujolais",new Date(2010), 1, ColorEnum.Blanc,Arrays.asList(fooda), Country.France));
-        winesList.add(new Wine(7,"Saint-Emillion",new Date(1995), 1, ColorEnum.Rouge, Arrays.asList(foods), Country.France));
-        winesList.add(new Wine(8,"Cabernet",new Date(2000), 1, ColorEnum.Rose,Arrays.asList(fooda), Country.France));
-        winesList.add(new Wine(9,"Mouton-cadet",new Date(1890), 1, ColorEnum.Blanc,Arrays.asList(foodb), Country.France));
-        winesList.add(new Wine(10,"Saint-Estephe",new Date(2005), 1, ColorEnum.Rouge,Arrays.asList(foodd), Country.France));
-        winesList.add(new Wine(11,"Chateau-neuf-du-pape",new Date(2016), 1, ColorEnum.Rouge,Arrays.asList(foodc), Country.France));
-        winesList.add(new Wine(12,"Beaujolais",new Date(2010), 1, ColorEnum.Rouge,Arrays.asList(fooda), Country.France));
+        winesList.add(new Wine(1, "Saint-Emillion", new Date(1995), 1, ColorEnum.Rouge, Arrays.asList(foodc), Country.France));
+        winesList.add(new Wine(2, "Cabernet", new Date(2000), 1, ColorEnum.Rose, Arrays.asList(fooda), Country.France));
+        winesList.add(new Wine(3, "Mouton-cadet", new Date(1890), 1, ColorEnum.Blanc, Arrays.asList(foodb), Country.France));
+        winesList.add(new Wine(4, "Saint-Estephe", new Date(2005), 1, ColorEnum.Rouge, Arrays.asList(foods), Country.France));
+        winesList.add(new Wine(5, "Chateau-neuf-du-pape", new Date(2016), 1, ColorEnum.Rouge, Arrays.asList(foodd), Country.France));
+        winesList.add(new Wine(6, "Beaujolais", new Date(2010), 1, ColorEnum.Blanc, Arrays.asList(fooda), Country.France));
+        winesList.add(new Wine(7, "Saint-Emillion", new Date(1995), 1, ColorEnum.Rouge, Arrays.asList(foods), Country.France));
+        winesList.add(new Wine(8, "Cabernet", new Date(2000), 1, ColorEnum.Rose, Arrays.asList(fooda), Country.France));
+        winesList.add(new Wine(9, "Mouton-cadet", new Date(1890), 1, ColorEnum.Blanc, Arrays.asList(foodb), Country.France));
+        winesList.add(new Wine(10, "Saint-Estephe", new Date(2005), 1, ColorEnum.Rouge, Arrays.asList(foodd), Country.France));
+        winesList.add(new Wine(11, "Chateau-neuf-du-pape", new Date(2016), 1, ColorEnum.Rouge, Arrays.asList(foodc), Country.France));
+        winesList.add(new Wine(12, "Beaujolais", new Date(2010), 1, ColorEnum.Rouge, Arrays.asList(fooda), Country.France));
 
 
         return winesList;
     }
 
-    public ArrayList<NameValuePair> getParams(Wine wine){
+    public ArrayList<NameValuePair> getParams(Wine wine) {
         // define and ArrayList whose elements are of type NameValuePair
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("name", wine.getName()));
@@ -218,7 +213,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(relativeLayout,name + getText(R.string.cellar_remove_text), Snackbar.LENGTH_LONG);
+                    .make(relativeLayout, name + getText(R.string.cellar_remove_text), Snackbar.LENGTH_LONG);
             snackbar.setAction(R.string.cellar_remove_undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -233,7 +228,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if(isDeleted){
+                    if (isDeleted) {
                         // TODO DELETE HERE
                         Log.i(TAG, "onSwiped: DELETED");
                         /*
@@ -281,10 +276,10 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
     @Override
     public void asyncResponse(String response, String label) {
-        switch(label){
+        switch (label) {
             //TODO get list of wine
-            case "GET_WINES" :
-                Log.i(TAG, "asyncResponse: GET_WINES" );
+            case "GET_WINES":
+                Log.i(TAG, "asyncResponse: GET_WINES");
                 Log.i(TAG, "asyncResponse: WINELIST" + response.toString());
 
                 /*
@@ -313,14 +308,12 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
                 break;
             //TODO post wine
-            case "POST_WINE" :
-                Log.i(TAG, "asyncResponse: POST_WINE" );
+            case "POST_WINE":
+                Log.i(TAG, "asyncResponse: POST_WINE");
                 break;
 
         }
     }
-
-
 
 
     @Override

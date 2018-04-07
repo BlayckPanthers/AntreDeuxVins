@@ -36,8 +36,8 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
     private User user, userFromRegister;
 
     private static final String apiURL = "https://reqres.in/api/login";
-    private ArrayList<NameValuePair> params ;
-    private String results ="";
+    private ArrayList<NameValuePair> params;
+    private String results = "";
     private JSONObject objects;
     private Intent intentFromRegister;
     private Bundle extraFromRegister;
@@ -49,18 +49,18 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
-        mailWrapper     = (TextInputLayout) findViewById(R.id.login_TIL_Mailwrapper);
-        pswWrapper      = (TextInputLayout) findViewById(R.id.login_TIL_pswWrapper);
+        mailWrapper = (TextInputLayout) findViewById(R.id.login_TIL_Mailwrapper);
+        pswWrapper = (TextInputLayout) findViewById(R.id.login_TIL_pswWrapper);
 
         TextView textView = (TextView) findViewById(R.id.textViewLink);
         textView.setText(Html.fromHtml(getString(R.string.login_link_register)));
 
-        emailValidator  = new EmailValidator();
+        emailValidator = new EmailValidator();
         encryptPassword = new EncryptPassword();
 
         User u = GlobalData.getInstance().getUserDao().selectionnerTout();
-        if(u!=null){
-            TaskService getPosts = new TaskService(this, "POST", getParamsUserDao(),"AUTO_LOGIN");
+        if (u != null) {
+            TaskService getPosts = new TaskService(this, "POST", getParamsUserDao(), "AUTO_LOGIN");
             getPosts.execute(apiURL);
         }
 
@@ -68,8 +68,8 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
         extraFromRegister = intentFromRegister.getExtras();
 
 
-        if(extraFromRegister != null) {
-            if(extraFromRegister.containsKey("parcel_user")){
+        if (extraFromRegister != null) {
+            if (extraFromRegister.containsKey("parcel_user")) {
                 userFromRegister = (User) getIntent().getParcelableExtra("parcel_user");
                 mailWrapper.getEditText().setText(userFromRegister.getMail());
                 pswWrapper.getEditText().setText(userFromRegister.getPassword());
@@ -85,28 +85,24 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
     }
 
     public void loginOnClick(View view) {
-        String email    = mailWrapper.getEditText().getText().toString();
+        String email = mailWrapper.getEditText().getText().toString();
         String password = pswWrapper.getEditText().getText().toString();
 
-        if(!email.equals("") && !password.equals(""))
-        {
-            if(emailValidator.validate(email)){
+        if (!email.equals("") && !password.equals("")) {
+            if (emailValidator.validate(email)) {
                 mailWrapper.setError(null);
-                user = new User(email,password);
+                user = new User(email, password);
 
                 params = getParams();
-                TaskService getPosts = new TaskService(this, "POST", params,"FIRST_LOGIN");
+                TaskService getPosts = new TaskService(this, "POST", params, "FIRST_LOGIN");
                 getPosts.execute(apiURL);
 
-            }
-            else{
+            } else {
                 mailWrapper.setError(String.valueOf(getText(R.string.login_error_invalid_mail)));
             }
 
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(),R.string.login_error_empty_fields,Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.login_error_empty_fields, Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -114,15 +110,15 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
     @Override
     public void asyncResponse(String response, String label) {
         // create a JSON array from the response string
-        switch(label){
-            case "FIRST_LOGIN" :
+        switch (label) {
+            case "FIRST_LOGIN":
                 try {
-                objects = new JSONObject(response);
+                    objects = new JSONObject(response);
 
-                    if(objects.has("token")){
+                    if (objects.has("token")) {
                         user.setToken(objects.getString("token"));
-                        if(extraFromRegister != null) {
-                            if(extraFromRegister.containsKey("parcel_user")){
+                        if (extraFromRegister != null) {
+                            if (extraFromRegister.containsKey("parcel_user")) {
                                 user.setName(userFromRegister.getName());
                             }
                         }
@@ -132,20 +128,19 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
                         Intent i = new Intent(this.getApplicationContext(), CellarActivity.class);
                         startActivity(i);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-                    }
-                    else {
+                    } else {
                         mailWrapper.setError(getText(R.string.login_error_incorrect_mail_or_password));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 break;
-            case "AUTO_LOGIN" :
+            case "AUTO_LOGIN":
 
                 try {
                     objects = new JSONObject(response);
 
-                    if(objects.has("token")){
+                    if (objects.has("token")) {
                         Intent i = new Intent(this.getApplicationContext(), CellarActivity.class);
                         startActivity(i);
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -166,7 +161,7 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
         return params;
     }
 
-    private ArrayList<NameValuePair> getParamsUserDao(){
+    private ArrayList<NameValuePair> getParamsUserDao() {
         // define and ArrayList whose elements are of type NameValuePair
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("email", GlobalData.getInstance().getUserDao().selectionnerTout().getMail()));

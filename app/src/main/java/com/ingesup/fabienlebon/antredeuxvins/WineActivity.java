@@ -33,27 +33,27 @@ import java.util.List;
 import cz.msebera.android.httpclient.NameValuePair;
 import cz.msebera.android.httpclient.message.BasicNameValuePair;
 
-public class WineActivity extends Activity  implements TaskService.OnAsyncRequestComplete{
+public class WineActivity extends Activity implements TaskService.OnAsyncRequestComplete {
 
     private static final String TAG = "WineActivity";
     private static final String apiURL = "https://reqres.in/api/login";
     private static final int ROUGE_ID = 1000;
     private static final int BLANC_ID = 1001;
-    private static final int ROSE_ID  = 1002;
+    private static final int ROSE_ID = 1002;
 
-    private ArrayList<TextInputLayout> listTIL ;
-    private ArrayList<RadioButton> listRadioButton ;
+    private ArrayList<TextInputLayout> listTIL;
+    private ArrayList<RadioButton> listRadioButton;
     private ArrayList<CheckBox> listCheckBox;
     private TextInputLayout TILname, TILmillesime, TILvolume;
     private RadioGroup type;
-    private RadioButton rouge,blanc,rose;
+    private RadioButton rouge, blanc, rose;
     private CheckBox viande, fromage, crustace;
-    private Button update,cancel,accept;
+    private Button update, cancel, accept;
     private ColorEnum e;
     private Wine wine, newWine;
 
-    private ArrayList<NameValuePair> params ;
-    private String results ="";
+    private ArrayList<NameValuePair> params;
+    private String results = "";
     private JSONObject objects;
 
     @Override
@@ -71,7 +71,7 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
         String foods = b.getString("foods");
         List<String> list = new ArrayList<String>(Arrays.asList(foods.split(",")));
         List<Food> foodList = new ArrayList<Food>();
-        for(String s : list)
+        for (String s : list)
             foodList.add(Food.valueOf(s));
 
         wine = new Wine(Integer.valueOf(Id), name, new Date(Integer.valueOf(millesime)), Float.valueOf(volume), ColorEnum.valueOf(color), foodList, Country.valueOf(country));
@@ -98,19 +98,19 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
         TILmillesime.getEditText().setText(millesime);
         TILvolume.getEditText().setText(volume);
 
-        listTIL = new ArrayList<TextInputLayout>(){{
+        listTIL = new ArrayList<TextInputLayout>() {{
             add(TILname);
             add(TILmillesime);
             add(TILvolume);
         }};
 
-        listRadioButton = new ArrayList<RadioButton>(){{
+        listRadioButton = new ArrayList<RadioButton>() {{
             add(rouge);
             add(blanc);
             add(rose);
         }};
 
-        listCheckBox = new ArrayList<CheckBox>(){{
+        listCheckBox = new ArrayList<CheckBox>() {{
             add(viande);
             add(fromage);
             add(crustace);
@@ -121,24 +121,23 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
         rose.setId(ROSE_ID);
 
 
-        if(ColorEnum.valueOf(color).equals(ColorEnum.Rouge))
+        if (ColorEnum.valueOf(color).equals(ColorEnum.Rouge))
             rouge.setChecked(true);
-        else if(ColorEnum.valueOf(color).equals(ColorEnum.Blanc))
+        else if (ColorEnum.valueOf(color).equals(ColorEnum.Blanc))
             blanc.setChecked(true);
         else
             rose.setChecked(true);
 
-        if(foodList.contains(Food.Viande))
+        if (foodList.contains(Food.Viande))
             viande.setChecked(true);
-        if(foodList.contains(Food.Fromage))
+        if (foodList.contains(Food.Fromage))
             fromage.setChecked(true);
-        if(foodList.contains(Food.Crustace))
+        if (foodList.contains(Food.Crustace))
             crustace.setChecked(true);
 
 
-
         Log.i(TAG, "onCreate: " +
-            "id " + Id +
+                "id " + Id +
                 " name " + name +
                 " millesime " + millesime +
                 " color " + color +
@@ -153,25 +152,25 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
 
     }
 
-    public void setEnableAll(){
-        for(TextInputLayout til : listTIL)
+    public void setEnableAll() {
+        for (TextInputLayout til : listTIL)
             til.setEnabled(true);
 
-        for(RadioButton radio : listRadioButton)
+        for (RadioButton radio : listRadioButton)
             radio.setEnabled(true);
 
-        for(CheckBox check : listCheckBox)
+        for (CheckBox check : listCheckBox)
             check.setEnabled(true);
     }
 
-    public void setDisableAll(){
-        for(TextInputLayout til : listTIL)
+    public void setDisableAll() {
+        for (TextInputLayout til : listTIL)
             til.setEnabled(false);
 
-        for(RadioButton radio : listRadioButton)
+        for (RadioButton radio : listRadioButton)
             radio.setEnabled(false);
 
-        for(CheckBox check : listCheckBox)
+        for (CheckBox check : listCheckBox)
             check.setEnabled(false);
     }
 
@@ -195,12 +194,12 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
         accept.setVisibility(View.GONE);
         cancel.setVisibility(View.GONE);
 
-        if(!TILname.getEditText().getText().toString().equals("") && !TILmillesime.getEditText().getText().toString().equals("")
+        if (!TILname.getEditText().getText().toString().equals("") && !TILmillesime.getEditText().getText().toString().equals("")
                 && !TILvolume.getEditText().getText().toString().equals("")) {
-            if(Integer.valueOf(TILmillesime.getEditText().getText().toString()) > 1900
+            if (Integer.valueOf(TILmillesime.getEditText().getText().toString()) > 1900
                     && Integer.valueOf(TILmillesime.getEditText().getText().toString()) < 2018) {
-                if(type.getCheckedRadioButtonId() > 0) {
-                    switch(type.getCheckedRadioButtonId()) {
+                if (type.getCheckedRadioButtonId() > 0) {
+                    switch (type.getCheckedRadioButtonId()) {
                         case ROUGE_ID:
                             e = ColorEnum.Rouge;
                             break;
@@ -211,17 +210,17 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
                             e = ColorEnum.Rose;
                             break;
                     }
-                    if(viande.isChecked() || fromage.isChecked() || crustace.isChecked()) {
+                    if (viande.isChecked() || fromage.isChecked() || crustace.isChecked()) {
                         List<Food> foodList = new ArrayList<Food>();
-                        if(viande.isChecked())
+                        if (viande.isChecked())
                             foodList.add(Food.Viande);
-                        if(fromage.isChecked())
+                        if (fromage.isChecked())
                             foodList.add(Food.Fromage);
-                        if(crustace.isChecked())
+                        if (crustace.isChecked())
                             foodList.add(Food.Crustace);
 
 
-                        newWine = new Wine(13,TILname.getEditText().getText().toString(),
+                        newWine = new Wine(13, TILname.getEditText().getText().toString(),
                                 new Date(Integer.valueOf(TILmillesime.getEditText().getText().toString())),
                                 Float.valueOf(TILvolume.getEditText().getText().toString()),
                                 e,
@@ -231,23 +230,18 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
                         TaskService getPosts = new TaskService(this, "POST", params);
                         getPosts.execute(apiURL);
 
+                    } else {
+                        Toast.makeText(this, getText(R.string.addwine_error_food_choice), Toast.LENGTH_SHORT).show();
                     }
-                    else{
-                        Toast.makeText(this,getText(R.string.addwine_error_food_choice),Toast.LENGTH_SHORT).show();
-                    }
+                } else {
+                    Toast.makeText(this, getText(R.string.addwine_error_type_wine), Toast.LENGTH_SHORT).show();
                 }
-                else{
-                    Toast.makeText(this,getText(R.string.addwine_error_type_wine),Toast.LENGTH_SHORT).show();
-                }
-            }
-            else{
+            } else {
                 TILmillesime.setError(getText(R.string.addwine_error_millesime_year));
             }
 
-        }
-        else
-        {
-            Toast.makeText(this,getText(R.string.login_error_empty_fields),Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getText(R.string.login_error_empty_fields), Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -259,11 +253,10 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
     }
 
 
-
     private ArrayList<NameValuePair> getParams() {
         // define and ArrayList whose elements are of type NameValuePair
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("id",String.valueOf(wine.getId())));
+        params.add(new BasicNameValuePair("id", String.valueOf(wine.getId())));
         params.add(new BasicNameValuePair("name", wine.getName()));
         params.add(new BasicNameValuePair("millesime", String.valueOf(wine.getMillesimeYear())));
         params.add(new BasicNameValuePair("color", wine.getColor().name()));
@@ -280,10 +273,9 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
         try {
             objects = new JSONObject(response);
 
-            if(objects.has("token")){
+            if (objects.has("token")) {
                 //TODO some verif ... OK
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Une erreur est survenue", Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {

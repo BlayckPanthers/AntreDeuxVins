@@ -40,14 +40,15 @@ public class CellarAdapter extends RecyclerView.Adapter<CellarAdapter.ViewHolder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public ImageView color;
-        public TextView  name;
-        public TextView  food;
+        public TextView name;
+        public TextView food;
         public RelativeLayout viewBackground, viewForeground;
+
         public ViewHolder(View v) {
             super(v);
             color = (ImageView) v.findViewById(R.id.list_view_single_wine_color);
-            name  = (TextView) v.findViewById(R.id.list_view_single_wine_name);
-            food  = (TextView) v.findViewById(R.id.list_view_single_wine_food);
+            name = (TextView) v.findViewById(R.id.list_view_single_wine_name);
+            food = (TextView) v.findViewById(R.id.list_view_single_wine_food);
             viewBackground = (RelativeLayout) v.findViewById(R.id.viewBackground);
             viewForeground = (RelativeLayout) v.findViewById(R.id.viewForeground);
         }
@@ -61,7 +62,7 @@ public class CellarAdapter extends RecyclerView.Adapter<CellarAdapter.ViewHolder
     @Override
     public CellarAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.cellar_single_layout,parent, false);
+                .inflate(R.layout.cellar_single_layout, parent, false);
         return new ViewHolder(v);
     }
 
@@ -83,7 +84,7 @@ public class CellarAdapter extends RecyclerView.Adapter<CellarAdapter.ViewHolder
                         "id " + w.getId() +
                         " name " + w.getName() +
                         " millesime " + w.getMillesime().toString() +
-                        " color " +  w.getColor().name() +
+                        " color " + w.getColor().name() +
                         " country " + w.getCountry().name() +
                         " volume " + String.valueOf(w.getVolume()) +
                         " foods " + w.getFoodsList(activity)
@@ -96,7 +97,7 @@ public class CellarAdapter extends RecyclerView.Adapter<CellarAdapter.ViewHolder
                 intent.putExtra("ColorEnum", w.getColor().name());
                 intent.putExtra("Country", w.getCountry().name());
                 intent.putExtra("Volume", String.valueOf(w.getVolume()));
-                intent.putExtra("foods",w.getFoodsList(activity));
+                intent.putExtra("foods", w.getFoodsList(activity));
 
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
@@ -104,7 +105,7 @@ public class CellarAdapter extends RecyclerView.Adapter<CellarAdapter.ViewHolder
         });
     }
 
-    public void updateList(List<Wine> list){
+    public void updateList(List<Wine> list) {
         wineList = list;
         notifyDataSetChanged();
     }

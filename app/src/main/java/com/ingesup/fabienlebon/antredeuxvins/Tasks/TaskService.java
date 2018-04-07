@@ -38,7 +38,7 @@ import cz.msebera.android.httpclient.impl.client.DefaultHttpClient;
  * Created by fabienlebon on 06/04/2018.
  */
 
-public class TaskService extends AsyncTask<String,Integer,String> {
+public class TaskService extends AsyncTask<String, Integer, String> {
 
     OnAsyncRequestComplete caller;
     Context context;
@@ -85,7 +85,8 @@ public class TaskService extends AsyncTask<String,Integer,String> {
             if (parameters != null) {
 
                 String query = "";
-                String EQ = "="; String AMP = "&";
+                String EQ = "=";
+                String AMP = "&";
                 for (NameValuePair param : parameters) {
                     query += param.getName() + EQ + URLEncoder.encode(param.getValue()) + AMP;
                 }
@@ -96,7 +97,7 @@ public class TaskService extends AsyncTask<String,Integer,String> {
             }
 
             HttpClient client = new DefaultHttpClient();
-            HttpGet get= new HttpGet(address);
+            HttpGet get = new HttpGet(address);
 
             HttpResponse response = client.execute(get);
             return stringifyResponse(response);
@@ -167,7 +168,7 @@ public class TaskService extends AsyncTask<String,Integer,String> {
         if (pDialog != null && pDialog.isShowing()) {
             pDialog.dismiss();
         }
-        caller.asyncResponse(s,label);
+        caller.asyncResponse(s, label);
     }
 
     @Override
@@ -180,7 +181,7 @@ public class TaskService extends AsyncTask<String,Integer,String> {
         if (pDialog != null && pDialog.isShowing()) {
             pDialog.dismiss();
         }
-        caller.asyncResponse(s,label);
+        caller.asyncResponse(s, label);
     }
 
     @Override
