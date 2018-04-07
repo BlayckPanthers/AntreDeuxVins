@@ -60,5 +60,8 @@
     <string name="blanc">Blanc</string>
     <string name="ros">Rosé</string>
     <string name="inscrivez_vous">Vous n\'avez pas de comptes ? &lt;u>Inscrivez-vous !&lt;/u></string>
+    <string name="deconnecter">Disconnect</string>
+    <string name="Bonjour">Hello :</string>
+    <string name="email">mail :</string>
 
 </resources>

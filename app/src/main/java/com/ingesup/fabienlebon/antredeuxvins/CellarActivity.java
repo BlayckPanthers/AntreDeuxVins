@@ -26,6 +26,8 @@ import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 import com.ingesup.fabienlebon.antredeuxvins.Tasks.TaskService;
 import com.ingesup.fabienlebon.antredeuxvins.Tools.GlobalData;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -133,6 +135,12 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         });
     }
 
+    public void ShowUserInfo(View view) {
+        Intent intent = new Intent(this, UserActivity.class);
+        startActivity(intent);
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+    }
+
     private List<Wine> genererWines() {
 
         Food[] foods = new Food[]{Food.Fromage, Food.Viande, Food.Crustace};
@@ -175,6 +183,14 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     public void onRefresh() {
         //TODO getWines
         swipeRefreshLayout.setRefreshing(true);
+        /*
+        TaskService getPosts = new TaskService(this, "GET", params,"GET_WINES");
+        getPosts.execute(apiURL);
+
+         */
+
+        TaskService getPosts = new TaskService(this, "GET", params,"GET_WINES");
+        getPosts.execute("https://reqres.in/api/unknown");
         cellarAdapter.notifyDataSetChanged();
         swipeRefreshLayout.setRefreshing(false);
 
@@ -186,6 +202,32 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
             //TODO get list of wine
             case "GET_WINES" :
                 Log.i(TAG, "asyncResponse: GET_WINES" );
+                Log.i(TAG, "asyncResponse: WINELIST" + response.toString());
+
+                /*
+                JSONArray list = null;
+                try {
+                    list = new JSONArray(response.toString());
+                    for(int i = 0 ; i < list.length() ; i++){
+                        int id=Integer.parseInt(list.getJSONObject(i).getString("id"));
+                        String name= list.getJSONObject(i).getString("name");
+                        String millesime=list.getJSONObject(i).getString("millesime");
+                        String color = list.getJSONObject(i).getString("ColorEnum");
+                        String country = list.getJSONObject(i).getString("Country");
+                        String volume = list.getJSONObject(i).getString("Volume");
+                        String foods = list.getJSONObject(i).getString("foods");
+                        List<String> listF = new ArrayList<String>(Arrays.asList(foods.split(" ")));
+                        List<Food> foodList = new ArrayList<Food>();
+                        for(String s : listF)
+                            foodList.add(Food.valueOf(s));
+                        Wine wine = new Wine(Integer.valueOf(id), name, new Date(Integer.valueOf(millesime)), Float.valueOf(volume), ColorEnum.valueOf(color), foodList, Country.valueOf(country));
+                        winesList.add(wine);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                */
+
                 break;
             //TODO post wine
             case "POST_WINE" :
@@ -207,4 +249,11 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         params.add(new BasicNameValuePair("foods", wine.getFoodsList()));
         return params;
     }
+
+    @Override
+    public void onBackPressed() {
+
+    }
+
+
 }

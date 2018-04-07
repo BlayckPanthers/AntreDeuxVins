@@ -14,16 +14,30 @@
         android:orientation="vertical"
         android:layout_marginTop="20dp"
         >
-        <TextView
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Ma Cave à vin"
-            android:textAlignment="center"
-            android:textSize="26dp"
-            android:textColor="@color/colorPrimary"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            />
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:src="@drawable/user_account2"
+                android:onClick="ShowUserInfo"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ma Cave à vin"
+                android:textAlignment="center"
+                android:textSize="26dp"
+                android:textColor="@color/colorPrimary"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                />
+
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/cellar_search"

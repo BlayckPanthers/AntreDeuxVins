@@ -33,11 +33,14 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
     private EncryptPassword encryptPassword;
     private TextInputLayout mailWrapper, pswWrapper;
 
-    private User user;
+    private User user, userFromRegister;
+
     private static final String apiURL = "https://reqres.in/api/login";
     private ArrayList<NameValuePair> params ;
     private String results ="";
     private JSONObject objects;
+    private Intent intentFromRegister;
+    private Bundle extraFromRegister;
 
 
     @Override
@@ -57,17 +60,17 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
 
         User u = GlobalData.getInstance().getUserDao().selectionnerTout();
         if(u!=null){
-            TaskService getPosts = new TaskService(this, "POST", getParams(u),"AUTO_LOGIN");
+            TaskService getPosts = new TaskService(this, "POST", getParamsUserDao(),"AUTO_LOGIN");
             getPosts.execute(apiURL);
         }
 
-        Intent intent = getIntent();
-        Bundle extra = intent.getExtras();
+        intentFromRegister = getIntent();
+        extraFromRegister = intentFromRegister.getExtras();
 
 
-        if(extra != null) {
-            if(extra.containsKey("parcel_user")){
-                User userFromRegister = (User) getIntent().getParcelableExtra("parcel_user");
+        if(extraFromRegister != null) {
+            if(extraFromRegister.containsKey("parcel_user")){
+                userFromRegister = (User) getIntent().getParcelableExtra("parcel_user");
                 mailWrapper.getEditText().setText(userFromRegister.getMail());
                 pswWrapper.getEditText().setText(userFromRegister.getPassword());
             }
@@ -118,7 +121,11 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
 
                     if(objects.has("token")){
                         user.setToken(objects.getString("token"));
-
+                        if(extraFromRegister != null) {
+                            if(extraFromRegister.containsKey("parcel_user")){
+                                user.setName(userFromRegister.getName());
+                            }
+                        }
                         GlobalData.getInstance().setUser(user);
                         GlobalData.getInstance().getUserDao().ajouter(user);
 
@@ -159,11 +166,11 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
         return params;
     }
 
-    private ArrayList<NameValuePair> getParams(User u) {
+    private ArrayList<NameValuePair> getParamsUserDao(){
         // define and ArrayList whose elements are of type NameValuePair
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("email", u.getMail()));
-        params.add(new BasicNameValuePair("password", u.getPassword()));
+        params.add(new BasicNameValuePair("email", GlobalData.getInstance().getUserDao().selectionnerTout().getMail()));
+        params.add(new BasicNameValuePair("password", GlobalData.getInstance().getUserDao().selectionnerTout().getPassword()));
         return params;
     }
 }
