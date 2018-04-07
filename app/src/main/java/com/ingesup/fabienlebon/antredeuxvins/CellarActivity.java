@@ -252,7 +252,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
     @Override
     public void onBackPressed() {
-
+        // Disable backbutton (to Login Activity) in cellarAcitivty
     }
 
 
