@@ -53,7 +53,7 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
         pswWrapper      = (TextInputLayout) findViewById(R.id.login_TIL_pswWrapper);
 
         TextView textView = (TextView) findViewById(R.id.textViewLink);
-        textView.setText(Html.fromHtml(getString(R.string.inscrivez_vous)));
+        textView.setText(Html.fromHtml(getString(R.string.login_link_register)));
 
         emailValidator  = new EmailValidator();
         encryptPassword = new EncryptPassword();
@@ -100,13 +100,13 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
 
             }
             else{
-                mailWrapper.setError("Adresse mail non valide");
+                mailWrapper.setError(String.valueOf(getText(R.string.login_error_invalid_mail)));
             }
 
         }
         else
         {
-            Toast.makeText(getApplicationContext(),"Veuillez remplir les champs",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),R.string.login_error_empty_fields,Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -134,7 +134,7 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     }
                     else {
-                        mailWrapper.setError("Mail ou password incorrect(s)");
+                        mailWrapper.setError(getText(R.string.login_error_incorrect_mail_or_password));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

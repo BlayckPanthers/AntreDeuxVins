@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Inscription"
+            android:text="@string/register_title_activity"
             android:textAlignment="center"
             android:textSize="42dp"
             android:textColor="@color/colorPrimary"
@@ -46,7 +46,7 @@
                 android:id="@+id/editTextMail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_edittext_mail"
+                android:hint="@string/register_hint_mail"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -61,7 +61,7 @@
                 android:id="@+id/editTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_edittext_name"
+                android:hint="@string/register_hint_name"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -78,7 +78,7 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_edittext_password"
+                android:hint="@string/register_hint_password"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -95,7 +95,7 @@
                 android:id="@+id/editTextConfirmPasswordPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/register_edittext_confirmpassword"
+                android:hint="@string/register_hint_confirm_password"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -105,7 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:gravity="center"
-            android:text="@string/register_valid_form"
+            android:text="@string/register_btn_register_and_login"
             android:textColor="@color/backgroungColor"
             android:background="@color/colorPrimary"
             android:onClick="registerOnclick"/>
@@ -116,7 +116,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:onClick="registerToLoginOnclick"
-            android:text="Vous n'avez pas de comptes ? Inscrivez-vous !" />
+            android:text="@string/register_link_login" />
 
     </LinearLayout>
 </RelativeLayout>

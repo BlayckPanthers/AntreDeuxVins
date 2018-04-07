@@ -69,7 +69,7 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
         String country = b.getString("Country");
         String volume = b.getString("Volume");
         String foods = b.getString("foods");
-        List<String> list = new ArrayList<String>(Arrays.asList(foods.split(" ")));
+        List<String> list = new ArrayList<String>(Arrays.asList(foods.split(",")));
         List<Food> foodList = new ArrayList<Food>();
         for(String s : list)
             foodList.add(Food.valueOf(s));
@@ -233,21 +233,21 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
 
                     }
                     else{
-                        Toast.makeText(this,"Choisissez au moins un accompagnement",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this,getText(R.string.addwine_error_food_choice),Toast.LENGTH_SHORT).show();
                     }
                 }
                 else{
-                    Toast.makeText(this,"Choisissez un type de vin",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this,getText(R.string.addwine_error_type_wine),Toast.LENGTH_SHORT).show();
                 }
             }
             else{
-                TILmillesime.setError("Entrez une date comprise entre 1900 et 2018");
+                TILmillesime.setError(getText(R.string.addwine_error_millesime_year));
             }
 
         }
         else
         {
-            Toast.makeText(this,"Veuillez remplir les champs",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getText(R.string.login_error_empty_fields),Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -269,7 +269,7 @@ public class WineActivity extends Activity  implements TaskService.OnAsyncReques
         params.add(new BasicNameValuePair("color", wine.getColor().name()));
         params.add(new BasicNameValuePair("country", wine.getCountry().name()));
         params.add(new BasicNameValuePair("volume", String.valueOf(wine.getVolume())));
-        params.add(new BasicNameValuePair("foods", wine.getFoodsList()));
+        params.add(new BasicNameValuePair("foods", wine.getFoodsList(this)));
 
         return params;
     }

@@ -1,5 +1,6 @@
 package com.ingesup.fabienlebon.antredeuxvins.Entities;
 
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -7,6 +8,7 @@ import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.ColorEnum;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Country;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Region;
+import com.ingesup.fabienlebon.antredeuxvins.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -120,21 +122,26 @@ public class Wine {
         this.foods = foods;
     }
 
-    public String getFoodsList(){
-        String foodString = "";
-        for (Food foodElement : this.foods){
-            if(foodElement != null)
-                foodString += foodElement.name() + " " ;
-
+    public String getFoodsList(Context ctx){
+        String foodsList ="";
+        for(Food f : foods){
+            switch (f){
+                case Viande:
+                    foodsList += ctx.getText(R.string.addwine_wine_food_meat) + ",";
+                    break;
+                case Fromage:
+                    foodsList += ctx.getText(R.string.addwine_wine_food_cheese) + ",";
+                    break;
+                case Crustace:
+                    foodsList += ctx.getText(R.string.addwine_wine_food_crustacean);
+                    break;
+            }
         }
-        return foodString;
+        return foodsList;
     }
 
 
-    @Override
-    public String toString() {
-        return Name +  " " + Color + " " + getFoodsList();
-    }
+
 
 
 }

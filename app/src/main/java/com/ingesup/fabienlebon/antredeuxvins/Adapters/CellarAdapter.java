@@ -15,6 +15,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.ingesup.fabienlebon.antredeuxvins.CellarActivity;
+import com.ingesup.fabienlebon.antredeuxvins.Entities.Enum.Food;
 import com.ingesup.fabienlebon.antredeuxvins.Entities.Wine;
 
 import com.ingesup.fabienlebon.antredeuxvins.R;
@@ -69,7 +70,8 @@ public class CellarAdapter extends RecyclerView.Adapter<CellarAdapter.ViewHolder
         final Wine w = wineList.get(position);
         holder.color.setBackgroundColor(Color.parseColor(w.getColor().printValue()));
         holder.name.setText(w.getName());
-        holder.food.setText(w.getFoodsList().replace(" ",",").substring(0,w.getFoodsList().length()-1));
+
+        holder.food.setText(w.getFoodsList(activity));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +86,7 @@ public class CellarAdapter extends RecyclerView.Adapter<CellarAdapter.ViewHolder
                         " color " +  w.getColor().name() +
                         " country " + w.getCountry().name() +
                         " volume " + String.valueOf(w.getVolume()) +
-                        " foods " + w.getFoodsList()
+                        " foods " + w.getFoodsList(activity)
 
                 );
 
@@ -94,7 +96,7 @@ public class CellarAdapter extends RecyclerView.Adapter<CellarAdapter.ViewHolder
                 intent.putExtra("ColorEnum", w.getColor().name());
                 intent.putExtra("Country", w.getCountry().name());
                 intent.putExtra("Volume", String.valueOf(w.getVolume()));
-                intent.putExtra("foods",w.getFoodsList());
+                intent.putExtra("foods",w.getFoodsList(activity));
 
                 activity.startActivity(intent);
                 activity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

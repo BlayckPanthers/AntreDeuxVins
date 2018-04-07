@@ -136,10 +136,22 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         for(Wine d: winesList){
             //or use .equal(text) with you want equal match
             //use .toLowerCase() for better matches
-            if(d.toString().toLowerCase().contains(text)){
+            if(d.getName().toLowerCase().contains(text)){
                 temp.add(d);
             }
-            else if(d.toString().contains(text)){
+            else if(d.getName().contains(text)){
+                temp.add(d);
+            }
+            else if(d.getColor().name().toLowerCase().contains(text)){
+                temp.add(d);
+            }
+            else if(d.getColor().name().contains(text)){
+                temp.add(d);
+            }
+            else if(d.getFoodsList(this).toLowerCase().contains(text)){
+                temp.add(d);
+            }
+            else if(d.getFoodsList(this).contains(text)){
                 temp.add(d);
             }
 
@@ -186,7 +198,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
         params.add(new BasicNameValuePair("color", wine.getColor().name()));
         params.add(new BasicNameValuePair("country", wine.getCountry().name()));
         params.add(new BasicNameValuePair("volume", String.valueOf(wine.getVolume())));
-        params.add(new BasicNameValuePair("foods", wine.getFoodsList()));
+        params.add(new BasicNameValuePair("foods", wine.getFoodsList(this)));
         return params;
     }
 
@@ -206,8 +218,8 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
 
             // showing snack bar with Undo option
             Snackbar snackbar = Snackbar
-                    .make(relativeLayout,name + " removed from cellar!", Snackbar.LENGTH_LONG);
-            snackbar.setAction("UNDO", new View.OnClickListener() {
+                    .make(relativeLayout,name + getText(R.string.cellar_remove_text), Snackbar.LENGTH_LONG);
+            snackbar.setAction(R.string.cellar_remove_undo, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     isDeleted = false;
@@ -231,7 +243,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
                          */
                     }
                 }
-            }, 2000);
+            }, 2900);
 
         }
     }
@@ -239,7 +251,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, Wine n) {
         Log.i(TAG, "onDialogPositiveClick: " + n.toString());
-        //winesList.add(n);
+        winesList.add(n);
         /*params = getParams(n);
         TaskService getPosts = new TaskService(this, "POST", params,"POST_WINE");
         getPosts.execute(apiURL);*/

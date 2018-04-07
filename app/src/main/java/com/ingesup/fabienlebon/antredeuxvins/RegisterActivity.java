@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ingesup.fabienlebon.antredeuxvins.Tasks.TaskService;
@@ -47,7 +49,8 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
         passWrapper     = (TextInputLayout) findViewById(R.id.register_TIL_PassWrapper);
         passRepWrapper  = (TextInputLayout) findViewById(R.id.register_TIL_PassRepWrapper);
 
-
+        TextView textviexLink = (TextView) findViewById(R.id.textViewLink);
+        textviexLink.setText(Html.fromHtml(getString(R.string.register_link_login)));
 
         emailValidator  = new EmailValidator();
         encryptPassword = new EncryptPassword();
@@ -81,15 +84,15 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
                     getPosts.execute(apiURL);
                 }
                 else{
-                    passWrapper.setError("Les mots de passes doivent être identiques");
+                    passWrapper.setError(getText(R.string.register_error_password_same));
                 }
             }
             else {
-                mailWrapper.setError("Adresse Email non valide");
+                mailWrapper.setError(getText(R.string.login_error_invalid_mail));
             }
         }
         else {
-            Toast.makeText(getApplicationContext(),"Veuillez remplir tous les champs",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(),R.string.login_error_empty_fields,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -108,7 +111,7 @@ public class RegisterActivity extends AppCompatActivity implements TaskService.O
                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
                 else {
-                    mailWrapper.setError("Mail ou password incorrect(s)");
+                    mailWrapper.setError(getText(R.string.register_error_account_exist));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

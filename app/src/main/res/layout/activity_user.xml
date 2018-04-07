@@ -34,7 +34,7 @@
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:textColor="@color/black"
-                android:text="@string/Bonjour"/>
+                android:text="@string/user_hello"/>
 
             <TextView
                 android:id="@+id/user_username"
@@ -45,7 +45,7 @@
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:textColor="@color/black"
-                android:text="Name"/>
+                />
 
 
 
@@ -63,7 +63,7 @@
                 android:textStyle="bold"
                 android:textSize="18dp"
                 android:textColor="@color/black"
-                android:text="@string/email"/>
+                android:text="@string/user_mail"/>
 
             <TextView
                 android:id="@+id/user_usermail"
@@ -73,8 +73,7 @@
                 android:layout_marginLeft="10dp"
                 android:textStyle="bold"
                 android:textSize="18dp"
-                android:textColor="@color/black"
-                android:text="Mail"/>
+                android:textColor="@color/black"/>
 
 
 
@@ -92,7 +91,7 @@
             android:layout_alignParentBottom="true"
             android:layout_margin="40dp"
             android:gravity="center"
-            android:text="@string/deconnecter"
+            android:text="@string/user_btn_disconnect"
             android:textColor="@color/backgroungColor"
             android:background="@color/colorPrimary"
             android:onClick="DisconnectOnClick"/>

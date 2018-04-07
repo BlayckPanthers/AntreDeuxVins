@@ -1,0 +1,64 @@
+<resources>
+    <string name="app_name">Antre Deux Vins</string>
+    <!-- LOGIN FIELDS -->
+    <string name="login_mail">E-Mail</string>
+    <string name="login_password">Mot de passe</string>
+    <string name="login_btn_connexion">Connexion</string>
+    <string name="login_link_register">Vous n\'avez pas de compte ? &lt;u>Inscrivez-vous !&lt;/u></string>
+    <string name="login_error_invalid_mail">Adresse e-mail non-valide</string>
+    <string name="login_error_empty_fields">Veuillez remplir les champs</string>
+    <string name="login_error_incorrect_mail_or_password">Adresse e-mail ou mot de passe incorrect</string>
+    <!-- REGISTER FIELDS -->
+    <string name="register_title_activity">Inscription</string>
+    <string name="register_hint_mail">E-Mail</string>
+    <string name="register_hint_name">Nom</string>
+    <string name="register_hint_password">Mot de passe</string>
+    <string name="register_hint_confirm_password">Confirmez le mot de passe</string>
+    <string name="register_btn_register_and_login">S\'inscrire</string>
+    <string name="register_link_login">Vous avez déjà un compte ? &lt;u> Connectez-vous ici!&lt;/u></string>
+    <string name="register_error_password_same">Les mots de passe doivent être identique</string>
+    <string name="register_error_account_exist">Cette E-Mail est déjà utilisée</string>
+    <!-- CELLAR FIELDS -->
+    <string name="cellar_activity_name">Ma Cave à Vins</string>
+    <string name="cellar_hint_search">Recherche</string>
+    <string name="cellar_single_delete">SUPPRIMER</string>
+    <string name="cellar_single_wine_name">Nom du vin</string>
+    <string name="cellar_single_wine_foods">Meilleur accompagnement</string>
+    <string name="cellar_remove_text"> supprimer de la cave !</string>
+    <string name="cellar_remove_undo">ANNULER</string>
+    <!-- ADDWINE FIELDS -->
+    <string name="addwine_wine_name">Nom du vin</string>
+    <string name="addwine_wine_millesime">Millesime</string>
+    <string name="addwine_wine_volume">Volume</string>
+    <string name="addwine_wine_type">Type</string>
+    <string name="addwine_wine_color_red">Rouge</string>
+    <string name="addwine_wine_color_white">Blanc</string>
+    <string name="addwine_wine_color_rose">Rosé</string>
+    <string name="addwine_wine_food_meat">Viande</string>
+    <string name="addwine_wine_food_cheese">Fromage</string>
+    <string name="addwine_wine_food_crustacean">Crustacé</string>
+    <string name="addwine_wine_advice">Meilleur avec :</string>
+    <string name="addwine_error_food_choice">Veuillez-choisir au moins un accompagnement</string>
+    <string name="addwine_error_type_wine">Choisissez un type de vin</string>
+    <string name="addwine_error_millesime_year">Veuillez-mettre une date comprise entre 1990 et 2018</string>
+    <string name="addwine_dialog_add">AJOUTER</string>
+    <!-- WINE FIELDS -->
+    <string name="wine_btn_update">MODIFIER</string>
+    <string name="wine_btn_accept">ACCEPTER</string>
+    <string name="wine_btn_cancel">ANNULER</string>
+    <!-- USER FIELDS -->
+    <string name="user_hello">Bonjour :</string>
+    <string name="user_mail">E-Mail :</string>
+    <string name="user_btn_disconnect">DECONNEXION</string>
+    <string name="user_dialog_message">Êtes-vous sure de vous déconnecter ?</string>
+    <string name="user_dialog_title">Déconnexion</string>
+    <string name="user_dialog_ok">OK</string>
+    <string name="user_dialog_cancel">ANNULER</string>
+    <!-- TASK SERVICE -->
+    <string name="taskservice_loading">Chargement...</string>
+    <!-- USELESS -->
+    <string name="title_activity_cellar">CellarActivity</string>
+
+
+
+</resources>

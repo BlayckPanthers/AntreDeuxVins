@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ingesup.fabienlebon.antredeuxvins.Entities.User;
+import com.ingesup.fabienlebon.antredeuxvins.R;
 import com.ingesup.fabienlebon.antredeuxvins.Tools.EncryptPassword;
 import com.loopj.android.http.HttpGet;
 
@@ -157,7 +158,7 @@ public class TaskService extends AsyncTask<String,Integer,String> {
     @Override
     protected void onPreExecute() {
         pDialog = new ProgressDialog(context);
-        pDialog.setMessage("Loading data..");
+        pDialog.setMessage(context.getText(R.string.taskservice_loading));
         pDialog.show();
     }
 

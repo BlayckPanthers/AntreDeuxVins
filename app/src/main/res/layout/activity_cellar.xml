@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Ma Cave à vin"
+                android:text="@string/cellar_activity_name"
                 android:textAlignment="center"
                 android:textSize="26dp"
                 android:textColor="@color/colorPrimary"
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="15dp"
-            android:hint="Recherche"
+            android:hint="@string/cellar_hint_search"
             />
 
         <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"

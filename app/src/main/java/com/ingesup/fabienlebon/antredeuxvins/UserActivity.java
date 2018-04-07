@@ -29,8 +29,8 @@ public class UserActivity extends Activity {
 
     public void DisconnectOnClick(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage(R.string.dialog_message).setTitle(R.string.dialog_title);
-        builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+        builder.setMessage(R.string.user_dialog_message).setTitle(R.string.user_dialog_title);
+        builder.setPositiveButton(R.string.user_dialog_ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 GlobalData.getInstance().getUserDao().supprimer(GlobalData.getInstance().getUserDao().selectionnerTout().getMail());
                 GlobalData.getInstance().setUser(null);
@@ -39,7 +39,7 @@ public class UserActivity extends Activity {
 
             }
         });
-        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.user_dialog_cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {}
         });
         AlertDialog dialog = builder.create();

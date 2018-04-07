@@ -44,7 +44,7 @@
                 android:id="@+id/editTextMail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/login_edittext_mail"
+                android:hint="@string/login_mail"
                 android:inputType="textEmailAddress" />
         </android.support.design.widget.TextInputLayout>
 
@@ -61,7 +61,7 @@
                 android:id="@+id/editTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/login_edittext_password"
+                android:hint="@string/login_password"
                 android:inputType="textPassword" />
         </android.support.design.widget.TextInputLayout>
 
@@ -73,7 +73,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="60dp"
             android:gravity="center"
-            android:text="@string/login_valid_form"
+            android:text="@string/login_btn_connexion"
             android:background="@color/colorPrimary"
             android:onClick="loginOnClick"
             android:textColor="@color/backgroungColor" />
@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
-            android:text="@string/inscrivez_vous"
+            android:text="@string/login_link_register"
             android:onClick="loginToRegisterOnclick"
             />
 

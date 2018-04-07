@@ -86,7 +86,7 @@ public class AddWineDialog extends DialogFragment {
         // Pass null as the parent view because its going in the dialog layout
         builder.setView(view)
                 // Add action buttons
-                .setPositiveButton("add", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.addwine_dialog_add, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         ColorEnum e = null;
@@ -126,25 +126,25 @@ public class AddWineDialog extends DialogFragment {
                                         mListener.onDialogPositiveClick(AddWineDialog.this, wine);
                                     }
                                     else{
-                                        Toast.makeText(getContext(),"Choisissez au moins un accompagnement",Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getContext(),getText(R.string.addwine_error_food_choice),Toast.LENGTH_SHORT).show();
                                     }
                                 }
                                 else{
-                                    Toast.makeText(getContext(),"Choisissez un type de vin",Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getContext(),getText(R.string.addwine_error_type_wine),Toast.LENGTH_SHORT).show();
                                 }
                             }
                             else{
-                                millesime.setError("Entrez une date comprise entre 1900 et 2018");
+                                millesime.setError(getText(R.string.addwine_error_millesime_year));
                             }
 
                         }
                         else
                         {
-                            Toast.makeText(getContext(),"Veuillez remplir les champs",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(),getText(R.string.login_error_empty_fields),Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.user_dialog_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         mListener.onDialogNegativeClick(AddWineDialog.this);
                     }

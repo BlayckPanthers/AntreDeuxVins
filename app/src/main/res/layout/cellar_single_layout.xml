@@ -27,7 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/padd_10"
             android:layout_toLeftOf="@id/delete_icon"
-            android:text="@string/delete"
+            android:text="@string/cellar_single_delete"
             android:textColor="#fff"
             android:textSize="13dp" />
     </RelativeLayout>
@@ -54,7 +54,7 @@
                 android:layout_alignTop="@+id/list_view_single_wine_color"
                 android:layout_marginStart="8dp"
                 android:layout_toEndOf="@+id/list_view_single_wine_color"
-                android:text="@string/res_list_view_single_name"
+                android:text="@string/cellar_single_wine_name"
                 android:textSize="20dp" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/list_view_single_wine_name"
                 android:layout_below="@+id/list_view_single_wine_name"
-                android:text="essai"
+                android:text="@string/cellar_single_wine_foods"
                 android:textSize="18dp" />
     </RelativeLayout>
 
