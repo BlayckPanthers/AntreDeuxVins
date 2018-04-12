@@ -277,7 +277,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
     @Override
     public void asyncResponse(String response, String label) {
         switch (label) {
-            //TODO get list of wine
+            //TODO res get list of wine
             case "GET_WINES":
                 Log.i(TAG, "asyncResponse: GET_WINES");
                 Log.i(TAG, "asyncResponse: WINELIST" + response.toString());
@@ -307,7 +307,7 @@ public class CellarActivity extends FragmentActivity implements AddWineDialog.ad
                 */
 
                 break;
-            //TODO post wine
+            //TODO res post wine
             case "POST_WINE":
                 Log.i(TAG, "asyncResponse: POST_WINE");
                 break;

@@ -36,7 +36,7 @@
     <string name="addwine_wine_color_rose">Rosé</string>
     <string name="addwine_wine_food_meat">Viande</string>
     <string name="addwine_wine_food_cheese">Fromage</string>
-    <string name="addwine_wine_food_crustacean">Crustacé</string>
+    <string name="addwine_wine_food_crustacean">Crustace</string>
     <string name="addwine_wine_advice">Meilleur avec :</string>
     <string name="addwine_error_food_choice">Veuillez-choisir au moins un accompagnement</string>
     <string name="addwine_error_type_wine">Choisissez un type de vin</string>

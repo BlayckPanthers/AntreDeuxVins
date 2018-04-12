@@ -29,16 +29,25 @@ import cz.msebera.android.httpclient.message.BasicNameValuePair;
 public class LoginActivity extends AppCompatActivity implements TaskService.OnAsyncRequestComplete {
 
     private static final String TAG = "LoginActivity";
+
+    // View objects
     private EmailValidator emailValidator;
-    private EncryptPassword encryptPassword;
     private TextInputLayout mailWrapper, pswWrapper;
 
-    private User user, userFromRegister;
+    /*
+      Instantiate three User
+      user is sent to the first login
+      userFromRegister come from RegisterActivity to fill the fields in the loginActivity after a register
+      userFromDb come from database if the user as already logged in
+     */
+    private User user, userFromRegister, userFromDb;
 
+    // Variables used by AsyncTask
     private static final String apiURL = "https://reqres.in/api/login";
     private ArrayList<NameValuePair> params;
-    private String results = "";
     private JSONObject objects;
+
+    // Variables for handling RegisterActivity intent
     private Intent intentFromRegister;
     private Bundle extraFromRegister;
 
@@ -49,25 +58,23 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
         setContentView(R.layout.activity_login);
         getSupportActionBar().hide();
 
+        // Initialize variables
         mailWrapper = (TextInputLayout) findViewById(R.id.login_TIL_Mailwrapper);
         pswWrapper = (TextInputLayout) findViewById(R.id.login_TIL_pswWrapper);
-
         TextView textView = (TextView) findViewById(R.id.textViewLink);
         textView.setText(Html.fromHtml(getString(R.string.login_link_register)));
-
         emailValidator = new EmailValidator();
-        encryptPassword = new EncryptPassword();
 
-        User u = GlobalData.getInstance().getUserDao().selectionnerTout();
-        if (u != null) {
+        // Check if the userFromDb as already logged in
+        userFromDb = GlobalData.getInstance().getUserDao().selectionnerTout();
+        if (userFromDb != null) {
             TaskService getPosts = new TaskService(this, "POST", getParamsUserDao(), "AUTO_LOGIN");
             getPosts.execute(apiURL);
         }
 
+        // Check if user come from RegisterActivity and fill the fields with his credentials
         intentFromRegister = getIntent();
         extraFromRegister = intentFromRegister.getExtras();
-
-
         if (extraFromRegister != null) {
             if (extraFromRegister.containsKey("parcel_user")) {
                 userFromRegister = (User) getIntent().getParcelableExtra("parcel_user");
@@ -78,21 +85,29 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
 
     }
 
+    /**
+     * Link to the RegisterActivity
+     *
+     * @param view
+     */
     public void loginToRegisterOnclick(View view) {
         Intent i = new Intent(this.getApplicationContext(), RegisterActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
     }
 
+    /**
+     * Login button with verifications on the fields and send to apiUrl params as an ArrayList<NameValuePair>()
+     *
+     * @param view
+     */
     public void loginOnClick(View view) {
         String email = mailWrapper.getEditText().getText().toString();
         String password = pswWrapper.getEditText().getText().toString();
-
         if (!email.equals("") && !password.equals("")) {
             if (emailValidator.validate(email)) {
                 mailWrapper.setError(null);
                 user = new User(email, password);
-
                 params = getParams();
                 TaskService getPosts = new TaskService(this, "POST", params, "FIRST_LOGIN");
                 getPosts.execute(apiURL);
@@ -107,6 +122,21 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
 
     }
 
+    @Override
+    public void onBackPressed() {
+
+    }
+
+    /**
+     * Get the response
+     * if ok :  - set a user in local database to allows the user to auto-connect after closing/oppening the app
+     * - Intent to CellarActivity
+     * <p>
+     * if nok : Inform the user
+     *
+     * @param response : response from the remote API
+     * @param label    : Allows multiTasking in same Activity
+     */
     @Override
     public void asyncResponse(String response, String label) {
         // create a JSON array from the response string
@@ -153,6 +183,10 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
 
     }
 
+
+    /**
+     * @return ArrayList<NameValuePair> params
+     */
     private ArrayList<NameValuePair> getParams() {
         // define and ArrayList whose elements are of type NameValuePair
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -161,6 +195,9 @@ public class LoginActivity extends AppCompatActivity implements TaskService.OnAs
         return params;
     }
 
+    /**
+     * @return ArrayList<NameValuePair> params
+     */
     private ArrayList<NameValuePair> getParamsUserDao() {
         // define and ArrayList whose elements are of type NameValuePair
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
